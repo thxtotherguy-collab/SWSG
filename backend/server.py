@@ -4,6 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import asyncio
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
@@ -11,6 +12,7 @@ import uuid
 from datetime import datetime, timezone
 import bcrypt
 import jwt
+import resend
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -21,6 +23,12 @@ db = client[os.environ['DB_NAME']]
 
 JWT_SECRET = os.environ.get('JWT_SECRET', 'popp-secret-key-2024')
 JWT_ALGORITHM = 'HS256'
+
+# Resend Email Configuration
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+if RESEND_API_KEY:
+    resend.api_key = RESEND_API_KEY
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
@@ -249,9 +257,143 @@ async def get_brands():
 
 # ─── Quote Routes ───
 
+def format_price(price: float) -> str:
+    """Format price in ZAR"""
+    return f"R{price:,.2f}"
+
+def generate_quote_email_html(name: str, items: List[dict], total: float) -> str:
+    """Generate HTML email for quote confirmation"""
+    # Build items list
+    items_html = ""
+    for item in items:
+        item_name = item.get('name', 'Product')
+        item_qty = item.get('qty', 1)
+        item_price = item.get('price', 0)
+        item_total = item_price * item_qty
+        items_html += f"""
+        <tr>
+            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">{item_name}</td>
+            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;">{item_qty}</td>
+            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">{format_price(item_price)}</td>
+            <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">{format_price(item_total)}</td>
+        </tr>
+        """
+    
+    # Calculate items summary for plain text
+    items_summary = ", ".join([f"{item.get('name', 'Product')} x{item.get('qty', 1)}" for item in items])
+    
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 40px 20px;">
+            <tr>
+                <td align="center">
+                    <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        <!-- Header -->
+                        <tr>
+                            <td style="background-color: #0052a3; padding: 30px; text-align: center;">
+                                <h1 style="color: #ffffff; margin: 0; font-size: 24px;">POPP Pump & Tank Co</h1>
+                                <p style="color: #93c5fd; margin: 8px 0 0 0; font-size: 14px;">Quote Request Received</p>
+                            </td>
+                        </tr>
+                        
+                        <!-- Content -->
+                        <tr>
+                            <td style="padding: 40px 30px;">
+                                <p style="color: #374151; font-size: 16px; margin: 0 0 20px 0;">Hi {name},</p>
+                                
+                                <p style="color: #374151; font-size: 16px; margin: 0 0 20px 0;">Thank you for your quote request.</p>
+                                
+                                <p style="color: #374151; font-size: 16px; margin: 0 0 25px 0;">Based on your selected items, here is a summary of your request:</p>
+                                
+                                <!-- Items Table -->
+                                <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e7eb; border-radius: 6px; overflow: hidden; margin-bottom: 25px;">
+                                    <tr style="background-color: #f9fafb;">
+                                        <th style="padding: 12px; text-align: left; font-size: 14px; color: #6b7280; font-weight: 600;">Product</th>
+                                        <th style="padding: 12px; text-align: center; font-size: 14px; color: #6b7280; font-weight: 600;">Qty</th>
+                                        <th style="padding: 12px; text-align: right; font-size: 14px; color: #6b7280; font-weight: 600;">Unit Price</th>
+                                        <th style="padding: 12px; text-align: right; font-size: 14px; color: #6b7280; font-weight: 600;">Total</th>
+                                    </tr>
+                                    {items_html}
+                                    <tr style="background-color: #f0f9ff;">
+                                        <td colspan="3" style="padding: 15px 12px; text-align: right; font-weight: bold; color: #0052a3; font-size: 16px;">Estimated Total:</td>
+                                        <td style="padding: 15px 12px; text-align: right; font-weight: bold; color: #0052a3; font-size: 18px;">{format_price(total)}</td>
+                                    </tr>
+                                </table>
+                                
+                                <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 25px; border-radius: 0 6px 6px 0;">
+                                    <p style="color: #92400e; margin: 0; font-size: 14px;">
+                                        <strong>Note:</strong> This is an estimated total. A specialist will contact you shortly with a detailed quote including delivery costs and any applicable discounts.
+                                    </p>
+                                </div>
+                                
+                                <p style="color: #374151; font-size: 16px; margin: 0 0 10px 0;">A specialist will contact you shortly with a detailed quote.</p>
+                                
+                                <p style="color: #374151; font-size: 16px; margin: 30px 0 5px 0;">Kind regards,</p>
+                                <p style="color: #0052a3; font-size: 16px; margin: 0; font-weight: bold;">Sales Team</p>
+                                <p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;">POPP Pump & Tank Co</p>
+                            </td>
+                        </tr>
+                        
+                        <!-- Footer -->
+                        <tr>
+                            <td style="background-color: #f9fafb; padding: 25px 30px; text-align: center; border-top: 1px solid #e5e7eb;">
+                                <p style="color: #6b7280; font-size: 13px; margin: 0 0 8px 0;">
+                                    <strong>POPP Pump & Tank Co</strong> | Johannesburg, South Africa
+                                </p>
+                                <p style="color: #6b7280; font-size: 13px; margin: 0 0 8px 0;">
+                                    Phone: +27 68 377 3507 | Email: info@popp.co.za
+                                </p>
+                                <p style="color: #9ca3af; font-size: 12px; margin: 15px 0 0 0;">
+                                    You received this email because you submitted a quote request on our website.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    """
+    return html
+
+async def send_quote_confirmation_email(name: str, email: str, items: List[dict], total: float):
+    """Send quote confirmation email to customer"""
+    if not RESEND_API_KEY:
+        logger.warning("RESEND_API_KEY not configured, skipping email")
+        return None
+    
+    try:
+        html_content = generate_quote_email_html(name, items, total)
+        
+        params = {
+            "from": SENDER_EMAIL,
+            "to": [email],
+            "subject": "Quote Request Received - POPP Pump & Tank Co",
+            "html": html_content
+        }
+        
+        # Run sync SDK in thread to keep FastAPI non-blocking
+        result = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Quote confirmation email sent to {email}, ID: {result.get('id')}")
+        return result
+    except Exception as e:
+        logger.error(f"Failed to send quote confirmation email to {email}: {str(e)}")
+        return None
+
 @api_router.post("/quotes", response_model=QuoteResponse)
 async def create_quote(data: QuoteRequestCreate):
     quote_id = str(uuid.uuid4())
+    
+    # Calculate total from items
+    total = sum(item.get('price', 0) * item.get('qty', 1) for item in data.items)
+    
     quote_doc = {
         "id": quote_id,
         "name": data.name,
@@ -260,10 +402,15 @@ async def create_quote(data: QuoteRequestCreate):
         "company": data.company,
         "message": data.message,
         "items": data.items,
+        "total": total,
         "status": "pending",
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.quotes.insert_one(quote_doc)
+    
+    # Send confirmation email (non-blocking)
+    asyncio.create_task(send_quote_confirmation_email(data.name, data.email, data.items, total))
+    
     return {"id": quote_id, "status": "pending", "message": "Quote request submitted successfully. We will contact you shortly."}
 
 # ─── Consultation Routes ───
