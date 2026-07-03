@@ -104,6 +104,94 @@
 
 user_problem_statement: Create a dynamic product catalog using the uploaded CSV dataset "ebara_super_catalog.csv" with filters (Category, Series, Power kW range, Price range), live search, sorting options, and responsive design. Replace existing /shop page with EBARA catalog.
 
+backend:
+  - task: "Health Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/health returns 200 with status:healthy"
+
+  - task: "Products Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/products returns 19 products after seed. Featured filter works correctly."
+
+  - task: "Categories Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/categories returns 6 categories with product counts"
+
+  - task: "Consultations Endpoint with enquiry_type field"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL BUG FOUND: enquiry_type field was defined in ConsultationCreate model but NOT being saved to MongoDB. The field was missing from consult_doc dictionary in create_consultation function."
+      - working: true
+        agent: "testing"
+        comment: "FIXED: Added enquiry_type field to consult_doc dictionary at line 429. POST /api/consultations now correctly saves enquiry_type to MongoDB. Backwards compatibility maintained (works without enquiry_type)."
+
+  - task: "Quotes Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/quotes works correctly. Endpoint succeeds even without RESEND_API_KEY (logs warning but doesn't fail)."
+
+  - task: "Auth Endpoints (Register & Login)"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/auth/register and POST /api/auth/login both working correctly. JWT token generation and bcrypt password hashing functional."
+
+  - task: "Email Template Rebrand to SWSG"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Email template successfully rebranded: Company name 'Southern Water Solutions Group', brand color #1E63A8, email info@swsg.co.za, phone +27 81 417 7689, subject 'Quote Request Received - Southern Water Solutions Group'"
+
 frontend:
   - task: "EBARA Catalog Page - Replace ShopPage with CSV data"
     implemented: true
@@ -245,7 +333,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All frontend features implemented and tested via screenshots"
+    - "Backend rebrand verification complete - all endpoints tested"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -253,3 +341,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Implemented complete EBARA catalog replacing ShopPage. All filters, search, sorting working. Tested via screenshots. Cart integration works."
+  - agent: "testing"
+    message: "Backend rebrand verification completed. CRITICAL BUG FIXED: enquiry_type field was missing from MongoDB insert in create_consultation function. Added 'enquiry_type: data.enquiry_type' to consult_doc dictionary at line 429. All 10 backend tests now passing: health, products, categories, consultations (with/without enquiry_type), quotes, auth (register/login), and email template rebrand verification."

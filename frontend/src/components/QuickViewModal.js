@@ -83,7 +83,7 @@ export default function QuickViewModal({ product, open, onClose }) {
               </div>
               <Button
                 onClick={() => { addItem(product, qty); onClose(false); }}
-                className="flex-1 bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white rounded-sm h-10 text-sm font-semibold"
+                className="flex-1 bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white rounded-sm h-10 text-sm font-semibold"
                 disabled={!product.in_stock}
                 data-testid="qv-add-to-cart"
               >
@@ -94,7 +94,7 @@ export default function QuickViewModal({ product, open, onClose }) {
             <Link
               to={`/product/${product.id}`}
               onClick={() => onClose(false)}
-              className="mt-3 text-center text-sm font-medium text-[hsl(214,100%,40%)] hover:underline inline-flex items-center justify-center gap-1"
+              className="mt-3 text-center text-sm font-medium text-[hsl(211,70%,39%)] hover:underline inline-flex items-center justify-center gap-1"
               data-testid="qv-view-full"
             >
               View Full Details <ChevronRight className="h-3 w-3" />

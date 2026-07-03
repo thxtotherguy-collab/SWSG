@@ -17,6 +17,9 @@ import CartPage from "./pages/CartPage";
 import AuthPage from "./pages/AuthPage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
+import PumpsPage from "./pages/PumpsPage";
+import IrrigationPage from "./pages/IrrigationPage";
+import AgriculturePage from "./pages/AgriculturePage";
 import { X, Construction } from "lucide-react";
 
 // Scroll to top on route change
@@ -79,7 +82,7 @@ function UnderConstructionNotice() {
         {/* Button */}
         <button
           onClick={handleDismiss}
-          className="w-full py-3 px-4 bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white font-semibold rounded-sm transition-colors"
+          className="w-full py-3 px-4 bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white font-semibold rounded-sm transition-colors"
         >
           Continue to Website
         </button>
@@ -105,6 +108,10 @@ function App() {
             <main className="flex-1 pt-[calc(2rem+64px)]">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/pumps" element={<PumpsPage />} />
+                <Route path="/irrigation" element={<IrrigationPage />} />
+                <Route path="/agriculture" element={<AgriculturePage />} />
+                <Route path="/store" element={<ShopPage />} />
                 <Route path="/shop" element={<ShopPage />} />
                 <Route path="/product/:id" element={<ProductPage />} />
                 <Route path="/pump-finder" element={<PumpFinderPage />} />

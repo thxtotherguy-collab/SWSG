@@ -86,6 +86,7 @@ class ConsultationCreate(BaseModel):
     phone: str
     email: str
     location: Optional[str] = None
+    enquiry_type: Optional[str] = None
     application_type: Optional[str] = None
     installation_type: Optional[str] = None
     flow_rate: Optional[str] = None
@@ -296,8 +297,8 @@ def generate_quote_email_html(name: str, items: List[dict], total: float) -> str
                     <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                         <!-- Header -->
                         <tr>
-                            <td style="background-color: #0052a3; padding: 30px; text-align: center;">
-                                <h1 style="color: #ffffff; margin: 0; font-size: 24px;">POPP Pump & Tank Co</h1>
+                            <td style="background-color: #1E63A8; padding: 30px; text-align: center;">
+                                <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Southern Water Solutions Group</h1>
                                 <p style="color: #93c5fd; margin: 8px 0 0 0; font-size: 14px;">Quote Request Received</p>
                             </td>
                         </tr>
@@ -321,8 +322,8 @@ def generate_quote_email_html(name: str, items: List[dict], total: float) -> str
                                     </tr>
                                     {items_html}
                                     <tr style="background-color: #f0f9ff;">
-                                        <td colspan="3" style="padding: 15px 12px; text-align: right; font-weight: bold; color: #0052a3; font-size: 16px;">Estimated Total:</td>
-                                        <td style="padding: 15px 12px; text-align: right; font-weight: bold; color: #0052a3; font-size: 18px;">{format_price(total)}</td>
+                                        <td colspan="3" style="padding: 15px 12px; text-align: right; font-weight: bold; color: #1E63A8; font-size: 16px;">Estimated Total:</td>
+                                        <td style="padding: 15px 12px; text-align: right; font-weight: bold; color: #1E63A8; font-size: 18px;">{format_price(total)}</td>
                                     </tr>
                                 </table>
                                 
@@ -335,8 +336,8 @@ def generate_quote_email_html(name: str, items: List[dict], total: float) -> str
                                 <p style="color: #374151; font-size: 16px; margin: 0 0 10px 0;">A specialist will contact you shortly with a detailed quote.</p>
                                 
                                 <p style="color: #374151; font-size: 16px; margin: 30px 0 5px 0;">Kind regards,</p>
-                                <p style="color: #0052a3; font-size: 16px; margin: 0; font-weight: bold;">Sales Team</p>
-                                <p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;">POPP Pump & Tank Co</p>
+                                <p style="color: #1E63A8; font-size: 16px; margin: 0; font-weight: bold;">SWSG Sales Team</p>
+                                <p style="color: #6b7280; font-size: 14px; margin: 5px 0 0 0;">Southern Water Solutions Group</p>
                             </td>
                         </tr>
                         
@@ -344,10 +345,10 @@ def generate_quote_email_html(name: str, items: List[dict], total: float) -> str
                         <tr>
                             <td style="background-color: #f9fafb; padding: 25px 30px; text-align: center; border-top: 1px solid #e5e7eb;">
                                 <p style="color: #6b7280; font-size: 13px; margin: 0 0 8px 0;">
-                                    <strong>POPP Pump & Tank Co</strong> | Johannesburg, South Africa
+                                    <strong>Southern Water Solutions Group (SWSG)</strong> | South Africa
                                 </p>
                                 <p style="color: #6b7280; font-size: 13px; margin: 0 0 8px 0;">
-                                    Phone: +27 68 377 3507 | Email: info@popp.co.za
+                                    Phone: +27 81 417 7689 | Email: info@swsg.co.za
                                 </p>
                                 <p style="color: #9ca3af; font-size: 12px; margin: 15px 0 0 0;">
                                     You received this email because you submitted a quote request on our website.
@@ -375,7 +376,7 @@ async def send_quote_confirmation_email(name: str, email: str, items: List[dict]
         params = {
             "from": SENDER_EMAIL,
             "to": [email],
-            "subject": "Quote Request Received - POPP Pump & Tank Co",
+            "subject": "Quote Request Received - Southern Water Solutions Group",
             "html": html_content
         }
         
@@ -425,6 +426,7 @@ async def create_consultation(data: ConsultationCreate):
         "phone": data.phone,
         "email": data.email,
         "location": data.location,
+        "enquiry_type": data.enquiry_type,
         "application_type": data.application_type,
         "installation_type": data.installation_type,
         "flow_rate": data.flow_rate,

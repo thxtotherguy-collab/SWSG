@@ -22,7 +22,7 @@ export default function ProductCard({ product, onQuickView, compareIds, onToggle
   if (s.capacity) specPills.push(s.capacity);
 
   return (
-    <div className="group relative flex flex-col bg-white border border-[hsl(214,32%,91%)] hover:border-[hsl(214,100%,40%)/0.4] hover:shadow-md transition-all duration-300 rounded-sm overflow-hidden" data-testid={`product-card-${product.id}`}>
+    <div className="group relative flex flex-col bg-white border border-[hsl(214,32%,91%)] hover:border-[hsl(211,70%,39%)/0.4] hover:shadow-md transition-all duration-300 rounded-sm overflow-hidden" data-testid={`product-card-${product.id}`}>
       {/* Badges row */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
         {hasDiscount && (
@@ -46,7 +46,7 @@ export default function ProductCard({ product, onQuickView, compareIds, onToggle
         {onQuickView && (
           <button
             onClick={(e) => { e.preventDefault(); onQuickView(product); }}
-            className="w-8 h-8 bg-white/90 backdrop-blur-sm border border-[hsl(214,32%,91%)] rounded-sm flex items-center justify-center hover:bg-[hsl(214,100%,40%)] hover:text-white hover:border-[hsl(214,100%,40%)] transition-colors"
+            className="w-8 h-8 bg-white/90 backdrop-blur-sm border border-[hsl(214,32%,91%)] rounded-sm flex items-center justify-center hover:bg-[hsl(211,70%,39%)] hover:text-white hover:border-[hsl(211,70%,39%)] transition-colors"
             title="Quick View"
             data-testid={`quick-view-${product.id}`}
           >
@@ -58,8 +58,8 @@ export default function ProductCard({ product, onQuickView, compareIds, onToggle
             onClick={(e) => { e.preventDefault(); onToggleCompare(product.id); }}
             className={`w-8 h-8 border rounded-sm flex items-center justify-center transition-colors ${
               isCompared
-                ? 'bg-[hsl(214,100%,40%)] text-white border-[hsl(214,100%,40%)]'
-                : 'bg-white/90 backdrop-blur-sm border-[hsl(214,32%,91%)] hover:bg-[hsl(214,100%,95%)] hover:border-[hsl(214,100%,40%)]'
+                ? 'bg-[hsl(211,70%,39%)] text-white border-[hsl(211,70%,39%)]'
+                : 'bg-white/90 backdrop-blur-sm border-[hsl(214,32%,91%)] hover:bg-[hsl(211,70%,94%)] hover:border-[hsl(211,70%,39%)]'
             }`}
             title={isCompared ? 'Remove from Compare' : 'Add to Compare'}
             data-testid={`compare-${product.id}`}
@@ -81,7 +81,7 @@ export default function ProductCard({ product, onQuickView, compareIds, onToggle
 
       <div className="flex flex-col flex-1 p-4">
         <p className="text-[10px] font-semibold uppercase tracking-wider text-[hsl(215,16%,47%)] mb-1">{product.brand}</p>
-        <Link to={`/product/${product.id}`} className="font-manrope font-semibold text-sm text-[hsl(222,47%,11%)] hover:text-[hsl(214,100%,40%)] transition-colors line-clamp-2 mb-1.5" data-testid={`product-link-${product.id}`}>
+        <Link to={`/product/${product.id}`} className="font-manrope font-semibold text-sm text-[hsl(222,47%,11%)] hover:text-[hsl(211,70%,39%)] transition-colors line-clamp-2 mb-1.5" data-testid={`product-link-${product.id}`}>
           {product.name}
         </Link>
         <p className="text-xs text-[hsl(215,16%,47%)] line-clamp-2 mb-2 flex-1">{product.short_description}</p>
@@ -109,7 +109,7 @@ export default function ProductCard({ product, onQuickView, compareIds, onToggle
           <Button
             size="sm"
             onClick={(e) => { e.preventDefault(); addItem(product); }}
-            className="bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white text-xs rounded-sm h-8 px-3"
+            className="bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white text-xs rounded-sm h-8 px-3"
             disabled={!product.in_stock}
             data-testid={`add-to-cart-${product.id}`}
           >

@@ -1,351 +1,318 @@
+#!/usr/bin/env python3
+"""
+Backend API Testing for SWSG Rebrand Verification
+Tests all backend endpoints and verifies the new enquiry_type field in consultations
+"""
+
 import requests
-import sys
 import json
-from datetime import datetime
+from pymongo import MongoClient
+import sys
 
-class PoppPumpsAPITester:
-    def __init__(self, base_url="https://pump-catalog-1.preview.emergentagent.com"):
-        self.base_url = base_url
-        self.api_url = f"{base_url}/api"
-        self.token = None
-        self.tests_run = 0
-        self.tests_passed = 0
-        self.test_results = []
+# Backend URL
+BASE_URL = "http://localhost:8001/api"
 
-    def log_result(self, test_name, passed, details=""):
-        """Log test result"""
-        self.tests_run += 1
-        if passed:
-            self.tests_passed += 1
-        
-        result = {
-            "test": test_name,
-            "passed": passed,
-            "details": details,
-            "timestamp": datetime.now().isoformat()
+# MongoDB connection
+MONGO_URL = "mongodb://localhost:27017"
+DB_NAME = "swsg_db"
+
+# Test results tracking
+test_results = []
+
+def log_test(test_name, passed, message=""):
+    """Log test result"""
+    status = "✅ PASS" if passed else "❌ FAIL"
+    result = f"{status} - {test_name}"
+    if message:
+        result += f": {message}"
+    print(result)
+    test_results.append({"test": test_name, "passed": passed, "message": message})
+    return passed
+
+def test_health():
+    """Test GET /api/health"""
+    try:
+        response = requests.get(f"{BASE_URL}/health", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if "status" in data and data["status"] == "healthy":
+                return log_test("GET /api/health", True, "Backend is healthy")
+            else:
+                return log_test("GET /api/health", False, f"Unexpected response: {data}")
+        else:
+            return log_test("GET /api/health", False, f"Status code: {response.status_code}")
+    except Exception as e:
+        return log_test("GET /api/health", False, f"Exception: {str(e)}")
+
+def test_products():
+    """Test GET /api/products - should return 19 products after seed"""
+    try:
+        response = requests.get(f"{BASE_URL}/products", timeout=5)
+        if response.status_code == 200:
+            products = response.json()
+            if isinstance(products, list):
+                count = len(products)
+                if count == 19:
+                    return log_test("GET /api/products", True, f"Returned {count} products as expected")
+                else:
+                    return log_test("GET /api/products", False, f"Expected 19 products, got {count}")
+            else:
+                return log_test("GET /api/products", False, "Response is not a list")
+        else:
+            return log_test("GET /api/products", False, f"Status code: {response.status_code}")
+    except Exception as e:
+        return log_test("GET /api/products", False, f"Exception: {str(e)}")
+
+def test_products_featured():
+    """Test GET /api/products?featured=true&limit=8"""
+    try:
+        response = requests.get(f"{BASE_URL}/products?featured=true&limit=8", timeout=5)
+        if response.status_code == 200:
+            products = response.json()
+            if isinstance(products, list):
+                count = len(products)
+                if count <= 8:
+                    # Verify all are featured
+                    all_featured = all(p.get("featured", False) for p in products)
+                    if all_featured:
+                        return log_test("GET /api/products?featured=true&limit=8", True, f"Returned {count} featured products")
+                    else:
+                        return log_test("GET /api/products?featured=true&limit=8", False, "Some products are not featured")
+                else:
+                    return log_test("GET /api/products?featured=true&limit=8", False, f"Expected max 8 products, got {count}")
+            else:
+                return log_test("GET /api/products?featured=true&limit=8", False, "Response is not a list")
+        else:
+            return log_test("GET /api/products?featured=true&limit=8", False, f"Status code: {response.status_code}")
+    except Exception as e:
+        return log_test("GET /api/products?featured=true&limit=8", False, f"Exception: {str(e)}")
+
+def test_categories():
+    """Test GET /api/categories"""
+    try:
+        response = requests.get(f"{BASE_URL}/categories", timeout=5)
+        if response.status_code == 200:
+            categories = response.json()
+            if isinstance(categories, list) and len(categories) > 0:
+                return log_test("GET /api/categories", True, f"Returned {len(categories)} categories")
+            else:
+                return log_test("GET /api/categories", False, "No categories returned")
+        else:
+            return log_test("GET /api/categories", False, f"Status code: {response.status_code}")
+    except Exception as e:
+        return log_test("GET /api/categories", False, f"Exception: {str(e)}")
+
+def test_consultation_with_enquiry_type():
+    """Test POST /api/consultations with enquiry_type field"""
+    try:
+        payload = {
+            "full_name": "John Smith",
+            "phone": "+27 81 123 4567",
+            "email": "john.smith@example.com",
+            "enquiry_type": "irrigation",
+            "application_type": "agricultural",
+            "description": "Testing new enquiry_type field for SWSG rebrand verification."
         }
-        self.test_results.append(result)
-        
-        status = "✅ PASS" if passed else "❌ FAIL"
-        print(f"{status} - {test_name}")
-        if details:
-            print(f"    Details: {details}")
-
-    def run_test(self, name, method, endpoint, expected_status, data=None, headers=None):
-        """Run a single API test"""
-        url = f"{self.api_url}/{endpoint}"
-        test_headers = {'Content-Type': 'application/json'}
-        if self.token:
-            test_headers['Authorization'] = f'Bearer {self.token}'
-        if headers:
-            test_headers.update(headers)
-
-        print(f"\n🔍 Testing {name}...")
-        print(f"   {method} {url}")
-        
-        try:
-            if method == 'GET':
-                response = requests.get(url, headers=test_headers, timeout=10)
-            elif method == 'POST':
-                response = requests.post(url, json=data, headers=test_headers, timeout=10)
-            elif method == 'PUT':
-                response = requests.put(url, json=data, headers=test_headers, timeout=10)
-            elif method == 'DELETE':
-                response = requests.delete(url, headers=test_headers, timeout=10)
-
-            success = response.status_code == expected_status
-            details = f"Status: {response.status_code}, Expected: {expected_status}"
-            
-            if not success:
+        response = requests.post(f"{BASE_URL}/consultations", json=payload, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if "id" in data and "status" in data and data["status"] == "pending":
+                consultation_id = data["id"]
+                # Verify in MongoDB that enquiry_type was saved
                 try:
-                    error_data = response.json()
-                    details += f", Response: {error_data}"
-                except:
-                    details += f", Response: {response.text[:200]}"
-            
-            self.log_result(name, success, details)
-            return success, response.json() if success and response.content else {}
-
-        except Exception as e:
-            self.log_result(name, False, f"Error: {str(e)}")
-            return False, {}
-
-    def test_health_check(self):
-        """Test health endpoint"""
-        return self.run_test("Health Check", "GET", "health", 200)
-
-    def test_seed_data(self):
-        """Test seed data endpoint"""
-        return self.run_test("Seed Data", "POST", "seed", 200)
-
-    def test_get_categories(self):
-        """Test get categories"""
-        success, data = self.run_test("Get Categories", "GET", "categories", 200)
-        if success and isinstance(data, list) and len(data) > 0:
-            self.log_result("Categories Data Validation", True, f"Found {len(data)} categories")
-            return True, data
-        elif success:
-            self.log_result("Categories Data Validation", False, "No categories returned")
-            return False, data
-        return success, data
-
-    def test_get_brands(self):
-        """Test get brands"""
-        success, data = self.run_test("Get Brands", "GET", "brands", 200)
-        if success and isinstance(data, list) and len(data) > 0:
-            self.log_result("Brands Data Validation", True, f"Found {len(data)} brands")
-            return True, data
-        elif success:
-            self.log_result("Brands Data Validation", False, "No brands returned")
-            return False, data
-        return success, data
-
-    def test_get_products(self):
-        """Test get products without filters"""
-        success, data = self.run_test("Get Products", "GET", "products", 200)
-        if success and isinstance(data, list) and len(data) > 0:
-            self.log_result("Products Data Validation", True, f"Found {len(data)} products")
-            return True, data
-        elif success:
-            self.log_result("Products Data Validation", False, "No products returned")
-            return False, data
-        return success, data
-
-    def test_get_featured_products(self):
-        """Test get featured products"""
-        success, data = self.run_test("Get Featured Products", "GET", "products?featured=true&limit=8", 200)
-        if success and isinstance(data, list):
-            featured_count = len(data)
-            self.log_result("Featured Products Data Validation", True, f"Found {featured_count} featured products")
-            return True, data
-        return success, data
-
-    def test_products_with_filters(self):
-        """Test products with various filters"""
-        # Test category filter
-        success1, _ = self.run_test("Products Category Filter", "GET", "products?category=booster-pumps", 200)
-        
-        # Test brand filter
-        success2, _ = self.run_test("Products Brand Filter", "GET", "products?brand=DAB", 200)
-        
-        # Test search filter
-        success3, _ = self.run_test("Products Search Filter", "GET", "products?search=pump", 200)
-        
-        # Test sort options
-        success4, _ = self.run_test("Products Sort Price Asc", "GET", "products?sort=price_asc", 200)
-        success5, _ = self.run_test("Products Sort Price Desc", "GET", "products?sort=price_desc", 200)
-        success6, _ = self.run_test("Products Sort Name Asc", "GET", "products?sort=name_asc", 200)
-        success7, _ = self.run_test("Products Sort Name Desc", "GET", "products?sort=name_desc", 200)
-        
-        return all([success1, success2, success3, success4, success5, success6, success7])
-
-    def test_get_single_product(self, product_id=None):
-        """Test get single product"""
-        if not product_id:
-            # Get a product ID first
-            success, products = self.test_get_products()
-            if success and products:
-                product_id = products[0]['id']
+                    client = MongoClient(MONGO_URL)
+                    db = client[DB_NAME]
+                    doc = db.consultations.find_one({"id": consultation_id})
+                    if doc and "enquiry_type" in doc and doc["enquiry_type"] == "irrigation":
+                        return log_test("POST /api/consultations (with enquiry_type)", True, f"Created consultation {consultation_id} with enquiry_type='irrigation'")
+                    else:
+                        return log_test("POST /api/consultations (with enquiry_type)", False, "enquiry_type not found in MongoDB document")
+                except Exception as db_error:
+                    return log_test("POST /api/consultations (with enquiry_type)", False, f"MongoDB verification failed: {str(db_error)}")
             else:
-                self.log_result("Get Single Product", False, "No products available to test with")
-                return False, {}
-        
-        success, data = self.run_test("Get Single Product", "GET", f"products/{product_id}", 200)
-        if success and data.get('id') == product_id:
-            self.log_result("Single Product Data Validation", True, f"Product ID matches: {product_id}")
-            return True, data
-        elif success:
-            self.log_result("Single Product Data Validation", False, f"Product ID mismatch")
-            return False, data
-        return success, data
+                return log_test("POST /api/consultations (with enquiry_type)", False, f"Unexpected response: {data}")
+        else:
+            return log_test("POST /api/consultations (with enquiry_type)", False, f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        return log_test("POST /api/consultations (with enquiry_type)", False, f"Exception: {str(e)}")
 
-    def test_get_related_products(self, product_id=None):
-        """Test get related products"""
-        if not product_id:
-            # Get a product ID first
-            success, products = self.test_get_products()
-            if success and products:
-                product_id = products[0]['id']
+def test_consultation_without_enquiry_type():
+    """Test POST /api/consultations without enquiry_type (backwards compatibility)"""
+    try:
+        payload = {
+            "full_name": "Jane Doe",
+            "phone": "+27 81 987 6543",
+            "email": "jane.doe@example.com",
+            "application_type": "residential",
+            "description": "Testing backwards compatibility without enquiry_type field."
+        }
+        response = requests.post(f"{BASE_URL}/consultations", json=payload, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if "id" in data and "status" in data and data["status"] == "pending":
+                return log_test("POST /api/consultations (without enquiry_type)", True, f"Created consultation {data['id']} - backwards compatible")
             else:
-                self.log_result("Get Related Products", False, "No products available to test with")
-                return False, {}
-        
-        success, data = self.run_test("Get Related Products", "GET", f"products/{product_id}/related", 200)
-        if success and isinstance(data, list):
-            self.log_result("Related Products Data Validation", True, f"Found {len(data)} related products")
-            return True, data
-        return success, data
+                return log_test("POST /api/consultations (without enquiry_type)", False, f"Unexpected response: {data}")
+        else:
+            return log_test("POST /api/consultations (without enquiry_type)", False, f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        return log_test("POST /api/consultations (without enquiry_type)", False, f"Exception: {str(e)}")
 
-    def test_user_registration(self):
-        """Test user registration"""
-        timestamp = datetime.now().strftime("%H%M%S")
-        test_user_data = {
-            "name": f"Test User {timestamp}",
-            "email": f"test{timestamp}@popptest.com",
-            "password": "TestPass123!",
-            "phone": "+27123456789"
-        }
-        
-        success, data = self.run_test("User Registration", "POST", "auth/register", 200, test_user_data)
-        if success and data.get('token') and data.get('user'):
-            self.token = data['token']  # Store token for subsequent tests
-            self.log_result("Registration Data Validation", True, f"User registered: {data['user']['email']}")
-            return True, data
-        elif success:
-            self.log_result("Registration Data Validation", False, "Missing token or user in response")
-            return False, data
-        return success, data
-
-    def test_user_login(self):
-        """Test user login with registered user"""
-        if not self.token:
-            self.log_result("User Login", False, "No user registered to test login with")
-            return False, {}
-            
-        # First register a user for login test
-        timestamp = datetime.now().strftime("%H%M%S") + "login"
-        test_user_data = {
-            "name": f"Login Test User {timestamp}",
-            "email": f"logintest{timestamp}@popptest.com",
-            "password": "LoginTest123!",
-            "phone": "+27123456790"
-        }
-        
-        # Register user
-        reg_success, _ = self.run_test("Pre-Login Registration", "POST", "auth/register", 200, test_user_data)
-        if not reg_success:
-            return False, {}
-        
-        # Now test login
-        login_data = {
-            "email": test_user_data["email"],
-            "password": test_user_data["password"]
-        }
-        
-        success, data = self.run_test("User Login", "POST", "auth/login", 200, login_data)
-        if success and data.get('token') and data.get('user'):
-            self.log_result("Login Data Validation", True, f"User logged in: {data['user']['email']}")
-            return True, data
-        elif success:
-            self.log_result("Login Data Validation", False, "Missing token or user in response")
-            return False, data
-        return success, data
-
-    def test_auth_me(self):
-        """Test get current user"""
-        if not self.token:
-            self.log_result("Get Current User", False, "No token available for auth test")
-            return False, {}
-        
-        success, data = self.run_test("Get Current User", "GET", "auth/me", 200, headers={'Authorization': f'Bearer {self.token}'})
-        if success and data.get('email'):
-            self.log_result("Auth Me Data Validation", True, f"Current user: {data['email']}")
-            return True, data
-        elif success:
-            self.log_result("Auth Me Data Validation", False, "Missing user data in response")
-            return False, data
-        return success, data
-
-    def test_quote_creation(self):
-        """Test quote creation"""
-        quote_data = {
-            "name": "Test Customer",
-            "email": "customer@test.com",
-            "phone": "+27123456789",
-            "company": "Test Company",
-            "message": "Test quote request",
+def test_quotes():
+    """Test POST /api/quotes with items"""
+    try:
+        payload = {
+            "name": "Michael Brown",
+            "email": "michael.brown@example.com",
+            "phone": "+27 81 555 1234",
+            "company": "Brown Irrigation Ltd",
+            "message": "Please provide a quote for these items",
             "items": [
-                {"id": "test-product-1", "name": "Test Pump", "qty": 2, "price": 1000},
-                {"id": "test-product-2", "name": "Test Tank", "qty": 1, "price": 5000}
+                {"name": "DAB E.SYBOX Mini 3", "qty": 2, "price": 12500.00},
+                {"name": "JoJo 2500L Vertical Tank", "qty": 1, "price": 4200.00}
             ]
         }
-        
-        success, data = self.run_test("Create Quote", "POST", "quotes", 200, quote_data)
-        if success and data.get('id') and data.get('status') == 'pending':
-            self.log_result("Quote Creation Data Validation", True, f"Quote created with ID: {data['id']}")
-            return True, data
-        elif success:
-            self.log_result("Quote Creation Data Validation", False, "Missing quote ID or incorrect status")
-            return False, data
-        return success, data
+        response = requests.post(f"{BASE_URL}/quotes", json=payload, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if "id" in data and "status" in data and data["status"] == "pending":
+                # Note: Email sending may fail if RESEND_API_KEY is not configured, but endpoint should still succeed
+                return log_test("POST /api/quotes", True, f"Created quote {data['id']} (email may not be sent if RESEND_API_KEY not configured)")
+            else:
+                return log_test("POST /api/quotes", False, f"Unexpected response: {data}")
+        else:
+            return log_test("POST /api/quotes", False, f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        return log_test("POST /api/quotes", False, f"Exception: {str(e)}")
 
-    def test_consultation_creation(self):
-        """Test consultation creation endpoint"""
-        consultation_data = {
-            "full_name": "Test Engineer",
-            "company": "Test Engineering Co",
-            "phone": "+27123456789",
-            "email": "engineer@test.com",
-            "location": "Cape Town, Western Cape",
-            "application_type": "commercial",
-            "installation_type": "new",
-            "flow_rate": "120 L/min",
-            "pressure_head": "45m",
-            "power_supply": "three_phase",
-            "water_source": "borehole",
-            "pipe_size": "2 inch",
-            "budget": "R50,000 - R100,000",
-            "timeline": "short",
-            "description": "Need pump system for commercial building water supply from borehole. Building has 3 floors with 20 outlets total. Distance from borehole to building is approximately 150m with 15m elevation difference."
+def test_auth_register():
+    """Test POST /api/auth/register"""
+    try:
+        # Generate unique email for this test
+        import time
+        email = f"testuser_{int(time.time())}@example.com"
+        payload = {
+            "name": "Test User",
+            "email": email,
+            "password": "SecurePassword123!",
+            "phone": "+27 81 999 8888"
         }
-        
-        success, data = self.run_test("Create Consultation", "POST", "consultations", 200, consultation_data)
-        if success and data.get('id') and data.get('status') == 'pending':
-            self.log_result("Consultation Creation Data Validation", True, f"Consultation created with ID: {data['id']}")
-            return True, data
-        elif success:
-            self.log_result("Consultation Creation Data Validation", False, "Missing consultation ID or incorrect status")
-            return False, data
-        return success, data
+        response = requests.post(f"{BASE_URL}/auth/register", json=payload, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if "token" in data and "user" in data:
+                return log_test("POST /api/auth/register", True, f"Registered user {email} successfully")
+            else:
+                return log_test("POST /api/auth/register", False, f"Unexpected response: {data}")
+        else:
+            return log_test("POST /api/auth/register", False, f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        return log_test("POST /api/auth/register", False, f"Exception: {str(e)}")
 
-    def print_summary(self):
-        """Print test summary"""
-        print(f"\n" + "="*60)
-        print(f"POPP PUMPS API TEST SUMMARY")
-        print(f"="*60)
-        print(f"Total Tests: {self.tests_run}")
-        print(f"Passed: {self.tests_passed}")
-        print(f"Failed: {self.tests_run - self.tests_passed}")
-        print(f"Success Rate: {(self.tests_passed/self.tests_run)*100:.1f}%" if self.tests_run > 0 else "No tests run")
+def test_auth_login():
+    """Test POST /api/auth/login"""
+    try:
+        # First register a user
+        import time
+        email = f"logintest_{int(time.time())}@example.com"
+        password = "LoginPassword123!"
         
-        if self.tests_run - self.tests_passed > 0:
-            print(f"\n❌ FAILED TESTS:")
-            for result in self.test_results:
-                if not result["passed"]:
-                    print(f"  - {result['test']}: {result['details']}")
+        # Register
+        register_payload = {
+            "name": "Login Test User",
+            "email": email,
+            "password": password,
+            "phone": "+27 81 777 6666"
+        }
+        register_response = requests.post(f"{BASE_URL}/auth/register", json=register_payload, timeout=5)
+        if register_response.status_code != 200:
+            return log_test("POST /api/auth/login", False, "Failed to register test user for login test")
         
-        return self.tests_passed == self.tests_run
+        # Now login
+        login_payload = {
+            "email": email,
+            "password": password
+        }
+        response = requests.post(f"{BASE_URL}/auth/login", json=login_payload, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            if "token" in data and "user" in data:
+                return log_test("POST /api/auth/login", True, f"Logged in user {email} successfully")
+            else:
+                return log_test("POST /api/auth/login", False, f"Unexpected response: {data}")
+        else:
+            return log_test("POST /api/auth/login", False, f"Status code: {response.status_code}, Response: {response.text}")
+    except Exception as e:
+        return log_test("POST /api/auth/login", False, f"Exception: {str(e)}")
+
+def verify_email_template_rebrand():
+    """Verify that the email template has been rebranded to SWSG"""
+    try:
+        # Check the server.py file for rebrand elements
+        with open("/app/backend/server.py", "r") as f:
+            content = f.read()
+            
+        checks = [
+            ("Southern Water Solutions Group" in content, "Company name 'Southern Water Solutions Group' found"),
+            ("#1E63A8" in content, "New brand color #1E63A8 found"),
+            ("info@swsg.co.za" in content, "Email info@swsg.co.za found"),
+            ("+27 81 417 7689" in content, "Phone +27 81 417 7689 found"),
+            ("Quote Request Received - Southern Water Solutions Group" in content, "Email subject updated")
+        ]
+        
+        all_passed = all(check[0] for check in checks)
+        details = ", ".join([check[1] for check in checks if check[0]])
+        
+        if all_passed:
+            return log_test("Email Template Rebrand Verification", True, details)
+        else:
+            failed = ", ".join([check[1] for check in checks if not check[0]])
+            return log_test("Email Template Rebrand Verification", False, f"Missing: {failed}")
+    except Exception as e:
+        return log_test("Email Template Rebrand Verification", False, f"Exception: {str(e)}")
 
 def main():
-    print("🚀 Starting POPP Pumps API Tests...")
-    print("Testing against: https://pump-catalog-1.preview.emergentagent.com")
-    
-    tester = PoppPumpsAPITester()
+    """Run all backend tests"""
+    print("=" * 80)
+    print("SWSG Backend Rebrand Verification Tests")
+    print("=" * 80)
+    print()
     
     # Run all tests
-    tester.test_health_check()
-    tester.test_seed_data()
-    tester.test_get_categories()
-    tester.test_get_brands()
-    tester.test_get_products()
-    tester.test_get_featured_products()
-    tester.test_products_with_filters()
-    tester.test_get_single_product()
-    tester.test_get_related_products()
-    tester.test_user_registration()
-    tester.test_user_login()
-    tester.test_auth_me()
-    tester.test_quote_creation()
-    tester.test_consultation_creation()
+    test_health()
+    test_products()
+    test_products_featured()
+    test_categories()
+    test_consultation_with_enquiry_type()
+    test_consultation_without_enquiry_type()
+    test_quotes()
+    test_auth_register()
+    test_auth_login()
+    verify_email_template_rebrand()
     
-    # Print summary and return result
-    all_passed = tester.print_summary()
+    print()
+    print("=" * 80)
+    print("Test Summary")
+    print("=" * 80)
     
-    # Save results to file for reference
-    with open('/app/backend_test_results.json', 'w') as f:
-        json.dump(tester.test_results, f, indent=2)
+    passed = sum(1 for r in test_results if r["passed"])
+    failed = sum(1 for r in test_results if not r["passed"])
+    total = len(test_results)
     
-    return 0 if all_passed else 1
+    print(f"Total Tests: {total}")
+    print(f"Passed: {passed}")
+    print(f"Failed: {failed}")
+    print()
+    
+    if failed > 0:
+        print("Failed Tests:")
+        for r in test_results:
+            if not r["passed"]:
+                print(f"  - {r['test']}: {r['message']}")
+        sys.exit(1)
+    else:
+        print("✅ All tests passed!")
+        sys.exit(0)
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

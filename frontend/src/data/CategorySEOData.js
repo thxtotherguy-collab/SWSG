@@ -1,11 +1,11 @@
 // 100% original SEO content per category — SA irrigation & pump market focused
-// NOT copied from any competitor. Written for POPP Pump & Tank Co.
+// NOT copied from any competitor. Written for Southern Water Solutions Group.
 
 const CATEGORY_SEO = {
   'booster-pumps': {
     h1: 'Booster Pumps',
     h2: 'Reliable Water Pressure Systems for South African Homes & Businesses',
-    intro: `Whether you're dealing with inconsistent municipal supply, low-pressure taps, or a multi-storey building that needs water pushed to every floor, a quality booster pump is the solution. At POPP, we stock a carefully selected range of pressure booster systems from leading manufacturers including DAB, Grundfos, Zilmet, and Pascali — each chosen for proven performance in South African conditions. Our booster pumps cover everything from compact single-household units drawing as little as 0.37 kW, right up to intelligent inverter-driven systems that maintain constant pressure across four or more outlets simultaneously. Many of our units feature built-in dry-run protection, anti-cycling technology, and whisper-quiet operation — critical features for residential installations where noise matters. If you're unsure which system suits your property, use our Pump Finder tool or request a free sizing consultation. We'll recommend the right pump based on your flow requirements, head distance, and the number of taps or outlets you need to serve.`,
+    intro: `Whether you're dealing with inconsistent municipal supply, low-pressure taps, or a multi-storey building that needs water pushed to every floor, a quality booster pump is the solution. At SWSG, we stock a carefully selected range of pressure booster systems from leading manufacturers including DAB, Grundfos, Zilmet, and Pascali — each chosen for proven performance in South African conditions. Our booster pumps cover everything from compact single-household units drawing as little as 0.37 kW, right up to intelligent inverter-driven systems that maintain constant pressure across four or more outlets simultaneously. Many of our units feature built-in dry-run protection, anti-cycling technology, and whisper-quiet operation — critical features for residential installations where noise matters. If you're unsure which system suits your property, use our Pump Finder tool or request a free sizing consultation. We'll recommend the right pump based on your flow requirements, head distance, and the number of taps or outlets you need to serve.`,
     applications: ['Residential pressure boosting', 'Multi-storey buildings', 'Townhouse complexes', 'Rainwater tank pressurisation', 'Commercial washrooms'],
     buyingGuide: {
       title: 'How to Choose the Right Booster Pump',
@@ -26,14 +26,14 @@ const CATEGORY_SEO = {
       { q: 'Do booster pumps use a lot of electricity?', a: 'Modern inverter booster pumps are highly efficient, typically consuming 0.37–0.8 kW. They only run when water is flowing, and variable-speed models reduce power consumption during low demand. Monthly running costs are minimal — comparable to a few light bulbs.' },
     ],
     relatedCategories: ['submersible-pumps', 'water-tanks', 'accessories'],
-    metaTitle: 'Booster Pumps South Africa | Pressure Pumps for Home & Business | POPP',
+    metaTitle: 'Booster Pumps South Africa | Pressure Pumps for Home & Business | SWSG',
     metaDescription: 'Shop quality booster pumps from DAB, Grundfos & Zilmet. Inverter-driven systems for constant water pressure. Free sizing advice. International delivery.',
   },
 
   'submersible-pumps': {
     h1: 'Submersible Pumps',
     h2: 'Versatile Underwater Pumping for Drainage, Wells & Water Features',
-    intro: `Submersible pumps are designed to operate while fully or partially immersed in water, making them the go-to choice for applications ranging from garden features and rainwater harvesting to construction-site dewatering and sewage drainage. POPP stocks a range of submersible units suited to South African conditions — from compact 55-watt fountain pumps for garden ponds through to heavy-duty drainage pumps with float switches rated for dirty water and solids handling. Our submersible range includes clean-water models for pressurisation from tanks and wells, as well as dirty-water variants built to handle suspended particles, sand, and silt. Key features across our range include corrosion-resistant housings, thermal overload protection, and long submersible cable lengths for deep installations. Whether you need to drain a flooded basement, circulate water through a feature, or draw from a shallow well, we have a submersible pump to match. Not sure if you need a submersible or a borehole pump? As a rule of thumb, submersibles work best in open water or shallow wells under 20m, while borehole pumps are purpose-built for narrow deep wells.`,
+    intro: `Submersible pumps are designed to operate while fully or partially immersed in water, making them the go-to choice for applications ranging from garden features and rainwater harvesting to construction-site dewatering and sewage drainage. SWSG stocks a range of submersible units suited to South African conditions — from compact 55-watt fountain pumps for garden ponds through to heavy-duty drainage pumps with float switches rated for dirty water and solids handling. Our submersible range includes clean-water models for pressurisation from tanks and wells, as well as dirty-water variants built to handle suspended particles, sand, and silt. Key features across our range include corrosion-resistant housings, thermal overload protection, and long submersible cable lengths for deep installations. Whether you need to drain a flooded basement, circulate water through a feature, or draw from a shallow well, we have a submersible pump to match. Not sure if you need a submersible or a borehole pump? As a rule of thumb, submersibles work best in open water or shallow wells under 20m, while borehole pumps are purpose-built for narrow deep wells.`,
     applications: ['Garden water features', 'Rainwater tank extraction', 'Basement & site dewatering', 'Sewage & drainage', 'Agricultural irrigation'],
     buyingGuide: {
       title: 'Choosing the Right Submersible Pump',
@@ -53,8 +53,8 @@ const CATEGORY_SEO = {
       { q: 'How deep can a submersible pump be installed?', a: 'Standard domestic submersible pumps operate at depths of 1–10 metres. The maximum depth depends on the cable length and the pump\'s head rating. For depths beyond 15m, consider a dedicated borehole pump designed for deep-well operation.' },
     ],
     relatedCategories: ['borehole-pumps', 'booster-pumps', 'accessories'],
-    metaTitle: 'Submersible Pumps South Africa | Drainage & Water Feature Pumps | POPP',
-    metaDescription: 'Quality submersible pumps for drainage, water features & tanks. Clean and dirty water models. Float switches, long cables. SA delivery from POPP.',
+    metaTitle: 'Submersible Pumps South Africa | Drainage & Water Feature Pumps | SWSG',
+    metaDescription: 'Quality submersible pumps for drainage, water features & tanks. Clean and dirty water models. Float switches, long cables. SA delivery from SWSG.',
   },
 
   'borehole-pumps': {
@@ -81,14 +81,14 @@ const CATEGORY_SEO = {
       { q: 'What is the difference between a 3-inch and 4-inch borehole pump?', a: 'The measurement refers to the motor diameter. A 3" pump fits boreholes with a minimum 90mm casing — common in domestic and narrow drilled holes. A 4" pump requires a minimum 100mm casing and is typically used in larger agricultural or commercial boreholes where higher flow rates are needed.' },
     ],
     relatedCategories: ['submersible-pumps', 'accessories', 'water-tanks'],
-    metaTitle: 'Borehole Pumps South Africa | Solar & Deep Well Pumps | POPP',
+    metaTitle: 'Borehole Pumps South Africa | Solar & Deep Well Pumps | SWSG',
     metaDescription: 'Professional borehole pumps for SA farms & estates. 3" and 4" models, solar-compatible options. Free borehole sizing service. Nationwide delivery.',
   },
 
   'self-priming-pumps': {
     h1: 'Self-Priming Pumps',
     h2: 'Reliable Water Transfer & Irrigation Pumps That Prime Themselves',
-    intro: `Self-priming pumps eliminate the hassle of manual priming — they automatically draw water from a source up to 8 metres below the pump, making them perfect for installations where the pump sits above the water level. This is the most common setup for irrigation from dams and rivers, transfer from JoJo tanks, and pressure boosting from ground-level reservoirs. POPP stocks a selected range of self-priming pumps from DAB and Zilmet, chosen for their robust construction and reliable suction capability in South African conditions. Our range includes compact 0.75 kW domestic units ideal for 2–3 taps, as well as larger 1 kW centrifugal models that handle irrigation duties with flow rates up to 80 L/min. Cast-iron housings and technopolymer impellers deliver durability while keeping weight manageable for surface-mounted installations. Self-priming pumps are an excellent choice when you need a surface-mounted unit that can pull water from a tank, dam, or well without needing the pump to sit below the water line. Pair them with an automatic pressure controller for hands-free operation that starts the pump when a tap opens and stops it when flow ceases.`,
+    intro: `Self-priming pumps eliminate the hassle of manual priming — they automatically draw water from a source up to 8 metres below the pump, making them perfect for installations where the pump sits above the water level. This is the most common setup for irrigation from dams and rivers, transfer from JoJo tanks, and pressure boosting from ground-level reservoirs. SWSG stocks a selected range of self-priming pumps from DAB and Zilmet, chosen for their robust construction and reliable suction capability in South African conditions. Our range includes compact 0.75 kW domestic units ideal for 2–3 taps, as well as larger 1 kW centrifugal models that handle irrigation duties with flow rates up to 80 L/min. Cast-iron housings and technopolymer impellers deliver durability while keeping weight manageable for surface-mounted installations. Self-priming pumps are an excellent choice when you need a surface-mounted unit that can pull water from a tank, dam, or well without needing the pump to sit below the water line. Pair them with an automatic pressure controller for hands-free operation that starts the pump when a tap opens and stops it when flow ceases.`,
     applications: ['Irrigation from dams & rivers', 'JoJo tank pressurisation', 'Rainwater harvesting', 'Garden & smallholding watering', 'General water transfer'],
     buyingGuide: {
       title: 'Selecting a Self-Priming Pump',
@@ -108,14 +108,14 @@ const CATEGORY_SEO = {
       { q: 'Can I use a self-priming pump for irrigation?', a: 'Absolutely. Self-priming pumps are one of the most popular choices for garden and smallholding irrigation in South Africa. They work well drawing from JoJo tanks, reservoirs, and dams. Choose a model with sufficient flow rate for your sprinkler or drip system requirements.' },
     ],
     relatedCategories: ['booster-pumps', 'accessories', 'water-tanks'],
-    metaTitle: 'Self-Priming Pumps South Africa | Irrigation & Transfer Pumps | POPP',
-    metaDescription: 'Quality self-priming pumps for irrigation, transfer & tank boosting. DAB & Zilmet models. Up to 8m suction lift. Free advice from POPP.',
+    metaTitle: 'Self-Priming Pumps South Africa | Irrigation & Transfer Pumps | SWSG',
+    metaDescription: 'Quality self-priming pumps for irrigation, transfer & tank boosting. DAB & Zilmet models. Up to 8m suction lift. Free advice from SWSG.',
   },
 
   'water-tanks': {
     h1: 'Water Tanks',
     h2: 'Durable Water Storage Solutions for Backup, Rainwater & Farming',
-    intro: `With load shedding and inconsistent municipal supply affecting communities across South Africa, a reliable water storage tank has become essential infrastructure for homes, farms, and businesses alike. POPP stocks a range of water tanks from trusted brands, spanning compact 1,000-litre slimline units that fit against walls and fences, through to 10,000-litre vertical tanks for farms and commercial properties. All our tanks are manufactured from UV-stabilised polyethylene — engineered to withstand the intense South African sun without degradation, cracking, or discolouration. They come fitted with inlet strainers and overflow fittings, and carry manufacturer warranties of up to 8 years. We also offer complete backup water solutions that combine a storage tank with an integrated booster pump, giving you a plug-and-play system ready for immediate use. Whether you are storing rainwater, creating a municipal backup supply, or need bulk water for agricultural irrigation, we have the right tank and — if needed — the pump system to pressurise it. Request a consultation and our team will estimate the storage capacity your setup requires.`,
+    intro: `With load shedding and inconsistent municipal supply affecting communities across South Africa, a reliable water storage tank has become essential infrastructure for homes, farms, and businesses alike. SWSG stocks a range of water tanks from trusted brands, spanning compact 1,000-litre slimline units that fit against walls and fences, through to 10,000-litre vertical tanks for farms and commercial properties. All our tanks are manufactured from UV-stabilised polyethylene — engineered to withstand the intense South African sun without degradation, cracking, or discolouration. They come fitted with inlet strainers and overflow fittings, and carry manufacturer warranties of up to 8 years. We also offer complete backup water solutions that combine a storage tank with an integrated booster pump, giving you a plug-and-play system ready for immediate use. Whether you are storing rainwater, creating a municipal backup supply, or need bulk water for agricultural irrigation, we have the right tank and — if needed — the pump system to pressurise it. Request a consultation and our team will estimate the storage capacity your setup requires.`,
     applications: ['Municipal backup water storage', 'Rainwater harvesting', 'Farm & agricultural storage', 'Commercial water reserves', 'Integrated tank & pump systems'],
     buyingGuide: {
       title: 'Choosing the Right Water Tank',
@@ -137,14 +137,14 @@ const CATEGORY_SEO = {
       { q: 'What is the difference between a slimline and vertical tank?', a: 'Slimline tanks are narrow, flat-sided units designed to fit against walls and in tight spaces. Vertical tanks are round and offer more storage per footprint. Slimline tanks are ideal for urban properties with limited space; vertical tanks are better for farms and properties with more room.' },
     ],
     relatedCategories: ['booster-pumps', 'self-priming-pumps', 'accessories'],
-    metaTitle: 'Water Tanks South Africa | Storage Tanks & Backup Systems | POPP',
+    metaTitle: 'Water Tanks South Africa | Storage Tanks & Backup Systems | SWSG',
     metaDescription: 'Quality water storage tanks from 1,000L to 10,000L. UV-stabilised polyethylene with 8-year warranty. Complete tank & pump backup systems. SA delivery.',
   },
 
   'accessories': {
     h1: 'Pump Accessories',
     h2: 'Essential Fittings, Controllers & Components for Your Pump System',
-    intro: `A pump is only as reliable as the components supporting it. POPP stocks the essential accessories that complete your water system — from pressure control switches that automate pump operation, to expansion vessels that protect against water hammer and reduce motor cycling. Our accessories range is carefully curated to complement the pumps and tanks in our catalogue, ensuring compatibility and performance across your entire installation. Pressure control switches provide automatic start/stop operation based on system pressure, eliminating the need to manually switch pumps on and off. Pressure vessels (expansion tanks) store a reserve of pressurised water, reducing the frequency of pump starts and smoothing pressure fluctuations throughout your pipe network. We also carry the fittings, connectors, and valves needed for professional installations. Whether you're a homeowner setting up a basic rain tank and booster system or an installer fitting out a complete borehole installation, you'll find the supporting components here. Unsure what you need? Contact our team — we'll help you spec the right accessories for your setup.`,
+    intro: `A pump is only as reliable as the components supporting it. SWSG stocks the essential accessories that complete your water system — from pressure control switches that automate pump operation, to expansion vessels that protect against water hammer and reduce motor cycling. Our accessories range is carefully curated to complement the pumps and tanks in our catalogue, ensuring compatibility and performance across your entire installation. Pressure control switches provide automatic start/stop operation based on system pressure, eliminating the need to manually switch pumps on and off. Pressure vessels (expansion tanks) store a reserve of pressurised water, reducing the frequency of pump starts and smoothing pressure fluctuations throughout your pipe network. We also carry the fittings, connectors, and valves needed for professional installations. Whether you're a homeowner setting up a basic rain tank and booster system or an installer fitting out a complete borehole installation, you'll find the supporting components here. Unsure what you need? Contact our team — we'll help you spec the right accessories for your setup.`,
     applications: ['Pump automation & control', 'Pressure stabilisation', 'Borehole installation accessories', 'Plumbing fittings & connectors', 'System protection & safety'],
     buyingGuide: {
       title: 'Essential Accessories for Your Pump Setup',
@@ -164,8 +164,8 @@ const CATEGORY_SEO = {
       { q: 'How do I choose the right pressure vessel size?', a: 'For single-pump domestic systems, a 24L vessel is the standard recommendation. It provides enough reserve to handle brief, low-demand draws (like flushing a toilet) without starting the pump. Larger systems with multiple pumps or high cycling frequency may need 50L or more.' },
     ],
     relatedCategories: ['booster-pumps', 'borehole-pumps', 'self-priming-pumps'],
-    metaTitle: 'Pump Accessories South Africa | Controllers, Vessels & Fittings | POPP',
-    metaDescription: 'Essential pump accessories — pressure switches, expansion vessels, fittings. Compatible with DAB, Grundfos, Zilmet. Complete your installation with POPP.',
+    metaTitle: 'Pump Accessories South Africa | Controllers, Vessels & Fittings | SWSG',
+    metaDescription: 'Essential pump accessories — pressure switches, expansion vessels, fittings. Compatible with DAB, Grundfos, Zilmet. Complete your installation with SWSG.',
   },
 };
 
@@ -178,8 +178,8 @@ CATEGORY_SEO['all'] = {
   buyingGuide: null,
   faq: [],
   relatedCategories: ['booster-pumps', 'submersible-pumps', 'borehole-pumps', 'water-tanks'],
-  metaTitle: 'Water Pumps & Tanks South Africa | POPP Pump & Tank Co',
-  metaDescription: 'Shop pumps, tanks & accessories from trusted brands. DAB, Grundfos, Zilmet, JoJo. Expert advice and international delivery from POPP.',
+  metaTitle: 'Water Pumps & Tanks South Africa | Southern Water Solutions Group',
+  metaDescription: 'Shop pumps, tanks & accessories from trusted brands. DAB, Grundfos, Zilmet, JoJo. Expert advice and international delivery from SWSG.',
 };
 
 export default CATEGORY_SEO;

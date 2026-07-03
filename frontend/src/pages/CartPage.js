@@ -48,7 +48,7 @@ export default function CartPage() {
     <div className="min-h-screen bg-[hsl(210,40%,98%)]" data-testid="cart-page">
       <div className="bg-white border-b border-[hsl(214,32%,91%)]">
         <div className="max-w-[1400px] mx-auto px-4 py-3 flex items-center gap-2 text-sm text-[hsl(215,16%,47%)]">
-          <Link to="/" className="hover:text-[hsl(214,100%,40%)]">Home</Link>
+          <Link to="/" className="hover:text-[hsl(211,70%,39%)]">Home</Link>
           <ChevronRight className="h-3 w-3" />
           <span className="text-[hsl(222,47%,11%)] font-medium">Quote Request</span>
         </div>
@@ -65,7 +65,7 @@ export default function CartPage() {
             <ShoppingCart className="h-16 w-16 text-[hsl(214,32%,91%)] mx-auto mb-4" />
             <p className="text-lg text-[hsl(215,16%,47%)] mb-6">Your quote is empty</p>
             <Link to="/shop">
-              <Button className="bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white rounded-sm" data-testid="continue-shopping-btn">
+              <Button className="bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white rounded-sm" data-testid="continue-shopping-btn">
                 Browse Products
               </Button>
             </Link>
@@ -116,38 +116,38 @@ export default function CartPage() {
                 <input
                   type="text" placeholder="Full Name *" required
                   value={form.name} onChange={(e) => setForm(f => ({...f, name: e.target.value}))}
-                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)]"
+                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)]"
                   data-testid="quote-name-input"
                 />
                 <input
                   type="email" placeholder="Email Address *" required
                   value={form.email} onChange={(e) => setForm(f => ({...f, email: e.target.value}))}
-                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)]"
+                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)]"
                   data-testid="quote-email-input"
                 />
                 <input
                   type="tel" placeholder="Phone Number *" required
                   value={form.phone} onChange={(e) => setForm(f => ({...f, phone: e.target.value}))}
-                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)]"
+                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)]"
                   data-testid="quote-phone-input"
                 />
                 <input
                   type="text" placeholder="Company (optional)"
                   value={form.company} onChange={(e) => setForm(f => ({...f, company: e.target.value}))}
-                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)]"
+                  className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)]"
                   data-testid="quote-company-input"
                 />
                 <textarea
                   placeholder="Additional notes (optional)"
                   value={form.message} onChange={(e) => setForm(f => ({...f, message: e.target.value}))}
-                  className="w-full px-3 py-2 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] h-20 resize-none"
+                  className="w-full px-3 py-2 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] h-20 resize-none"
                   data-testid="quote-message-input"
                 />
                 <Separator />
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="w-full h-11 bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white rounded-sm font-semibold"
+                  className="w-full h-11 bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white rounded-sm font-semibold"
                   data-testid="submit-quote-btn"
                 >
                   <Send className="h-4 w-4 mr-2" />

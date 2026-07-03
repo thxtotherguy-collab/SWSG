@@ -62,7 +62,7 @@ function VoltageToggle({ selected, onChange }) {
         onClick={() => onChange('380V')}
         className={`px-2 py-1 text-[10px] font-semibold rounded-sm transition-all ${
           selected === '380V'
-            ? 'bg-[hsl(214,100%,40%)] text-white shadow-sm'
+            ? 'bg-[hsl(211,70%,39%)] text-white shadow-sm'
             : 'text-[hsl(215,16%,47%)] hover:text-[hsl(222,47%,11%)]'
         }`}
         data-testid="voltage-toggle-380v"
@@ -114,7 +114,7 @@ function CatalogProductCard({ product }) {
   };
 
   return (
-    <div className="group relative flex flex-col bg-white border border-[hsl(214,32%,91%)] hover:border-[hsl(214,100%,40%)/0.4] hover:shadow-md transition-all duration-300 rounded-sm overflow-hidden" data-testid={`product-card-${product.id}`}>
+    <div className="group relative flex flex-col bg-white border border-[hsl(214,32%,91%)] hover:border-[hsl(211,70%,39%)/0.4] hover:shadow-md transition-all duration-300 rounded-sm overflow-hidden" data-testid={`product-card-${product.id}`}>
       {/* Stock Badge */}
       <div className="absolute top-3 left-3 z-10">
         <Badge className="bg-emerald-500/90 text-white text-[9px] font-semibold rounded-sm">
@@ -125,7 +125,7 @@ function CatalogProductCard({ product }) {
       {/* Dual Voltage Badge */}
       {product.has_dual_voltage && (
         <div className="absolute top-3 right-3 z-10">
-          <Badge className="bg-[hsl(214,100%,40%)] text-white text-[9px] font-semibold rounded-sm flex items-center gap-1">
+          <Badge className="bg-[hsl(211,70%,39%)] text-white text-[9px] font-semibold rounded-sm flex items-center gap-1">
             <Zap className="h-2.5 w-2.5" /> Dual Voltage
           </Badge>
         </div>
@@ -167,7 +167,7 @@ function CatalogProductCard({ product }) {
           <span className="inline-flex px-1.5 py-0.5 bg-[hsl(210,40%,96%)] text-[9px] font-medium text-[hsl(222,47%,11%)] rounded-sm">
             {product.series}
           </span>
-          <span className="inline-flex px-1.5 py-0.5 bg-[hsl(214,100%,95%)] text-[9px] font-medium text-[hsl(214,100%,40%)] rounded-sm">
+          <span className="inline-flex px-1.5 py-0.5 bg-[hsl(211,70%,94%)] text-[9px] font-medium text-[hsl(211,70%,39%)] rounded-sm">
             {product.category}
           </span>
         </div>
@@ -190,7 +190,7 @@ function CatalogProductCard({ product }) {
           <Button
             size="sm"
             onClick={handleAddToCart}
-            className="bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white text-xs rounded-sm h-8 px-3"
+            className="bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white text-xs rounded-sm h-8 px-3"
             data-testid={`add-to-cart-${product.id}`}
           >
             <Package className="h-3.5 w-3.5 mr-1" /> Add
@@ -424,7 +424,7 @@ export default function ShopPage() {
               <SlidersHorizontal className="h-4 w-4" />
               Filters
               {activeFilterCount > 0 && (
-                <Badge className="bg-[hsl(214,100%,40%)] text-white text-[10px] h-5 px-1.5">{activeFilterCount}</Badge>
+                <Badge className="bg-[hsl(211,70%,39%)] text-white text-[10px] h-5 px-1.5">{activeFilterCount}</Badge>
               )}
             </Button>
 
@@ -492,7 +492,7 @@ export default function ShopPage() {
                       onClick={() => updateFilter('category', cat)}
                       className={`block w-full text-left px-3 py-1.5 text-sm rounded-sm transition-colors ${
                         selectedCategory === cat
-                          ? 'bg-[hsl(214,100%,95%)] text-[hsl(214,100%,40%)] font-medium'
+                          ? 'bg-[hsl(211,70%,94%)] text-[hsl(211,70%,39%)] font-medium'
                           : 'hover:bg-[hsl(210,40%,96%)] text-[hsl(222,47%,11%)]'
                       }`}
                       data-testid={`filter-category-${cat}`}
@@ -514,7 +514,7 @@ export default function ShopPage() {
                       onClick={() => updateFilter('series', s)}
                       className={`block w-full text-left px-3 py-1.5 text-sm rounded-sm transition-colors ${
                         selectedSeries === s
-                          ? 'bg-[hsl(214,100%,95%)] text-[hsl(214,100%,40%)] font-medium'
+                          ? 'bg-[hsl(211,70%,94%)] text-[hsl(211,70%,39%)] font-medium'
                           : 'hover:bg-[hsl(210,40%,96%)] text-[hsl(222,47%,11%)]'
                       }`}
                       data-testid={`filter-series-${s}`}
@@ -628,7 +628,7 @@ export default function ShopPage() {
           <SlidersHorizontal className="h-4 w-4" />
           Filter & Sort
           {activeFilterCount > 0 && (
-            <Badge className="bg-[hsl(214,100%,40%)] text-white text-[10px] h-5 px-1.5 ml-1">{activeFilterCount}</Badge>
+            <Badge className="bg-[hsl(211,70%,39%)] text-white text-[10px] h-5 px-1.5 ml-1">{activeFilterCount}</Badge>
           )}
         </Button>
       </div>

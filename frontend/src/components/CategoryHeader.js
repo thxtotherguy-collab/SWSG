@@ -21,9 +21,9 @@ export default function CategoryHeader({ categorySlug, productCount }) {
       {/* Breadcrumb */}
       <div className="bg-[hsl(210,40%,98%)] border-b border-[hsl(214,32%,91%)]">
         <div className="max-w-[1400px] mx-auto px-4 py-3 flex items-center gap-2 text-sm text-[hsl(215,16%,47%)]">
-          <Link to="/" className="hover:text-[hsl(214,100%,40%)] transition-colors">Home</Link>
+          <Link to="/" className="hover:text-[hsl(211,70%,39%)] transition-colors">Home</Link>
           <ChevronRight className="h-3 w-3" />
-          <Link to="/shop" className="hover:text-[hsl(214,100%,40%)] transition-colors">Shop</Link>
+          <Link to="/shop" className="hover:text-[hsl(211,70%,39%)] transition-colors">Shop</Link>
           {!isAll && (
             <>
               <ChevronRight className="h-3 w-3" />
@@ -54,7 +54,7 @@ export default function CategoryHeader({ categorySlug, productCount }) {
             {seo.applications?.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
                 {seo.applications.map((app, i) => (
-                  <span key={i} className="inline-flex items-center px-3 py-1 bg-[hsl(214,100%,96%)] text-[hsl(214,100%,35%)] text-xs font-medium rounded-sm">
+                  <span key={i} className="inline-flex items-center px-3 py-1 bg-[hsl(214,100%,96%)] text-[hsl(211,70%,32%)] text-xs font-medium rounded-sm">
                     {app}
                   </span>
                 ))}
@@ -69,7 +69,7 @@ export default function CategoryHeader({ categorySlug, productCount }) {
                   <Link
                     key={slug}
                     to={`/shop?category=${slug}`}
-                    className="text-[hsl(214,100%,40%)] hover:underline font-medium"
+                    className="text-[hsl(211,70%,39%)] hover:underline font-medium"
                   >
                     {CATEGORY_NAMES[slug] || slug}
                   </Link>
@@ -95,7 +95,7 @@ export function BuyingGuidePanel({ categorySlug }) {
       <ul className="space-y-2.5 mb-5">
         {guide.points.map((point, i) => (
           <li key={i} className="flex gap-3 text-sm text-[hsl(222,47%,11%)]/80 leading-relaxed">
-            <span className="shrink-0 w-5 h-5 bg-[hsl(214,100%,95%)] text-[hsl(214,100%,40%)] rounded-full flex items-center justify-center text-[10px] font-bold mt-0.5">
+            <span className="shrink-0 w-5 h-5 bg-[hsl(211,70%,94%)] text-[hsl(211,70%,39%)] rounded-full flex items-center justify-center text-[10px] font-bold mt-0.5">
               {i + 1}
             </span>
             <span>{point}</span>

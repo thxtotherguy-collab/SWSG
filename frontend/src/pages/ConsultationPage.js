@@ -87,7 +87,7 @@ const FAQ_DATA = [
 
 const EMPTY_FORM = {
   full_name: '', company: '', phone: '', email: '', location: '',
-  application_type: '', installation_type: '', flow_rate: '', pressure_head: '',
+  enquiry_type: '', application_type: '', installation_type: '', flow_rate: '', pressure_head: '',
   power_supply: '', water_source: '', pipe_size: '', budget: '', timeline: '',
   description: '',
 };
@@ -126,17 +126,17 @@ export default function ConsultationPage() {
         <div className="absolute inset-0 opacity-[0.04]" style={{backgroundImage:'url("data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h40v40H0z\' fill=\'none\'/%3E%3Cpath d=\'M0 40L40 0M-10 10L30-30M10 50L50 10\' stroke=\'%23fff\' stroke-width=\'0.5\'/%3E%3C/svg%3E")'}} />
         <div className="relative max-w-[1400px] mx-auto px-4 py-20 lg:py-28">
           <div className="max-w-3xl">
-            <p className="text-[hsl(195,100%,50%)] font-semibold text-xs uppercase tracking-[0.2em] mb-5">Technical Consultation</p>
+            <p className="text-[hsl(123,46%,54%)] font-semibold text-xs uppercase tracking-[0.2em] mb-5">SWSG &bull; Technical Consultation</p>
             <h1 className="font-manrope font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.1] mb-6" data-testid="consultation-h1">
-              Professional Pump &amp; System Consultation
+              Professional Water &amp; System Consultation
             </h1>
             <p className="text-base md:text-lg text-gray-400 leading-relaxed mb-10 max-w-2xl">
-              Get expert guidance on pump selection, fittings, pressure systems, irrigation layouts, borehole setups, and complete water management solutions.
+              Get expert guidance on pumps, irrigation layouts, agricultural water systems, borehole setups and complete water management solutions from Southern Water Solutions Group.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button
                 onClick={scrollToForm}
-                className="bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white h-12 px-8 text-sm font-semibold rounded-sm"
+                className="bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white h-12 px-8 text-sm font-semibold rounded-sm"
                 data-testid="hero-request-btn"
               >
                 Request a Consultation <ArrowRight className="ml-2 h-4 w-4" />
@@ -178,7 +178,7 @@ export default function ConsultationPage() {
                   'Replacement and upgrade assessments',
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-4.5 w-4.5 text-[hsl(214,100%,40%)] mt-0.5 shrink-0" />
+                    <CheckCircle2 className="h-4.5 w-4.5 text-[hsl(211,70%,39%)] mt-0.5 shrink-0" />
                     <span className="text-sm text-[hsl(222,47%,11%)]">{item}</span>
                   </div>
                 ))}
@@ -201,11 +201,11 @@ export default function ConsultationPage() {
             {AUDIENCE.map((a, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center gap-3 p-6 bg-[hsl(210,40%,98%)] border border-[hsl(214,32%,91%)] rounded-sm hover:border-[hsl(214,100%,40%)/0.3] transition-colors"
+                className="flex flex-col items-center gap-3 p-6 bg-[hsl(210,40%,98%)] border border-[hsl(214,32%,91%)] rounded-sm hover:border-[hsl(211,70%,39%)/0.3] transition-colors"
                 data-testid={`audience-${i}`}
               >
                 <div className="w-11 h-11 bg-white border border-[hsl(214,32%,91%)] rounded-sm flex items-center justify-center">
-                  <a.icon className="h-5 w-5 text-[hsl(214,100%,40%)]" />
+                  <a.icon className="h-5 w-5 text-[hsl(211,70%,39%)]" />
                 </div>
                 <span className="text-sm font-medium text-[hsl(222,47%,11%)] text-center leading-tight">{a.label}</span>
               </div>
@@ -227,11 +227,11 @@ export default function ConsultationPage() {
             {CATEGORIES.map((cat, i) => (
               <div
                 key={i}
-                className="bg-white border border-[hsl(214,32%,91%)] rounded-sm p-6 sm:p-8 flex flex-col sm:flex-row gap-5 hover:border-[hsl(214,100%,40%)/0.3] transition-colors"
+                className="bg-white border border-[hsl(214,32%,91%)] rounded-sm p-6 sm:p-8 flex flex-col sm:flex-row gap-5 hover:border-[hsl(211,70%,39%)/0.3] transition-colors"
                 data-testid={`consult-category-${i}`}
               >
                 <div className="w-12 h-12 bg-[hsl(214,100%,96%)] rounded-sm flex items-center justify-center shrink-0">
-                  <cat.icon className="h-6 w-6 text-[hsl(214,100%,40%)]" />
+                  <cat.icon className="h-6 w-6 text-[hsl(211,70%,39%)]" />
                 </div>
                 <div className="flex-1">
                   <h3 className="font-manrope font-bold text-lg text-[hsl(222,47%,11%)] mb-2">{cat.title}</h3>
@@ -240,7 +240,7 @@ export default function ConsultationPage() {
                     variant="outline"
                     size="sm"
                     onClick={scrollToForm}
-                    className="rounded-sm text-xs font-semibold gap-1.5 hover:bg-[hsl(214,100%,40%)] hover:text-white hover:border-[hsl(214,100%,40%)]"
+                    className="rounded-sm text-xs font-semibold gap-1.5 hover:bg-[hsl(211,70%,39%)] hover:text-white hover:border-[hsl(211,70%,39%)]"
                     data-testid={`request-advice-${i}`}
                   >
                     Request Technical Advice <ArrowRight className="h-3.5 w-3.5" />
@@ -268,29 +268,43 @@ export default function ConsultationPage() {
             {/* Contact Information */}
             <div className="p-6 sm:p-8 border-b border-[hsl(214,32%,91%)]">
               <h3 className="font-manrope font-semibold text-base text-[hsl(222,47%,11%)] mb-5 flex items-center gap-2">
-                <span className="w-6 h-6 bg-[hsl(214,100%,40%)] text-white text-[10px] font-bold rounded-sm flex items-center justify-center">1</span>
+                <span className="w-6 h-6 bg-[hsl(211,70%,39%)] text-white text-[10px] font-bold rounded-sm flex items-center justify-center">1</span>
                 Contact Information
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Full Name *</label>
-                  <input type="text" required value={form.full_name} onChange={e => update('full_name', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-full-name" />
+                  <input type="text" required value={form.full_name} onChange={e => update('full_name', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-full-name" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Company Name</label>
-                  <input type="text" value={form.company} onChange={e => update('company', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-company" />
+                  <input type="text" value={form.company} onChange={e => update('company', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-company" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Phone Number *</label>
-                  <input type="tel" required value={form.phone} onChange={e => update('phone', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-phone" />
+                  <input type="tel" required value={form.phone} onChange={e => update('phone', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-phone" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Email Address *</label>
-                  <input type="email" required value={form.email} onChange={e => update('email', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-email" />
+                  <input type="email" required value={form.email} onChange={e => update('email', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-email" />
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Location</label>
-                  <input type="text" placeholder="City / Province" value={form.location} onChange={e => update('location', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-location" />
+                  <input type="text" placeholder="City / Province" value={form.location} onChange={e => update('location', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-location" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Enquiry Type *</label>
+                  <Select value={form.enquiry_type} onValueChange={v => update('enquiry_type', v)}>
+                    <SelectTrigger className="w-full h-10 rounded-sm text-sm" data-testid="form-enquiry-type">
+                      <SelectValue placeholder="What is your enquiry about?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pumps">Pumps</SelectItem>
+                      <SelectItem value="irrigation">Irrigation</SelectItem>
+                      <SelectItem value="agriculture">Agriculture</SelectItem>
+                      <SelectItem value="general">General Consultation</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -298,7 +312,7 @@ export default function ConsultationPage() {
             {/* Project Information */}
             <div className="p-6 sm:p-8 border-b border-[hsl(214,32%,91%)]">
               <h3 className="font-manrope font-semibold text-base text-[hsl(222,47%,11%)] mb-5 flex items-center gap-2">
-                <span className="w-6 h-6 bg-[hsl(214,100%,40%)] text-white text-[10px] font-bold rounded-sm flex items-center justify-center">2</span>
+                <span className="w-6 h-6 bg-[hsl(211,70%,39%)] text-white text-[10px] font-bold rounded-sm flex items-center justify-center">2</span>
                 Project Information
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -331,11 +345,11 @@ export default function ConsultationPage() {
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Required Flow Rate (if known)</label>
-                  <input type="text" placeholder="e.g. 40 L/min" value={form.flow_rate} onChange={e => update('flow_rate', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-flow-rate" />
+                  <input type="text" placeholder="e.g. 40 L/min" value={form.flow_rate} onChange={e => update('flow_rate', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-flow-rate" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Required Pressure / Head (if known)</label>
-                  <input type="text" placeholder="e.g. 35m or 3.5 bar" value={form.pressure_head} onChange={e => update('pressure_head', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-pressure-head" />
+                  <input type="text" placeholder="e.g. 35m or 3.5 bar" value={form.pressure_head} onChange={e => update('pressure_head', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-pressure-head" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Power Supply Available</label>
@@ -368,11 +382,11 @@ export default function ConsultationPage() {
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Pipe Size (if known)</label>
-                  <input type="text" placeholder="e.g. 1 inch, 25mm" value={form.pipe_size} onChange={e => update('pipe_size', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-pipe-size" />
+                  <input type="text" placeholder="e.g. 1 inch, 25mm" value={form.pipe_size} onChange={e => update('pipe_size', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-pipe-size" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Estimated Budget (Optional)</label>
-                  <input type="text" placeholder="e.g. R10,000 – R25,000" value={form.budget} onChange={e => update('budget', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]" data-testid="form-budget" />
+                  <input type="text" placeholder="e.g. R10,000 – R25,000" value={form.budget} onChange={e => update('budget', e.target.value)} className="w-full h-10 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]" data-testid="form-budget" />
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-xs font-medium text-[hsl(222,47%,11%)] mb-1.5">Project Timeline</label>
@@ -394,7 +408,7 @@ export default function ConsultationPage() {
             {/* Description + Submit */}
             <div className="p-6 sm:p-8">
               <h3 className="font-manrope font-semibold text-base text-[hsl(222,47%,11%)] mb-5 flex items-center gap-2">
-                <span className="w-6 h-6 bg-[hsl(214,100%,40%)] text-white text-[10px] font-bold rounded-sm flex items-center justify-center">3</span>
+                <span className="w-6 h-6 bg-[hsl(211,70%,39%)] text-white text-[10px] font-bold rounded-sm flex items-center justify-center">3</span>
                 Project Details
               </h3>
               <div className="space-y-4">
@@ -404,7 +418,7 @@ export default function ConsultationPage() {
                     value={form.description}
                     onChange={e => update('description', e.target.value)}
                     placeholder="Describe your project requirements, existing setup, problems experienced, distances, elevation changes, number of outlets, or any other technical details that will help us assist you."
-                    className="w-full px-3 py-2.5 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)] h-32 resize-none"
+                    className="w-full px-3 py-2.5 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)] h-32 resize-none"
                     data-testid="form-description"
                   />
                 </div>
@@ -414,7 +428,7 @@ export default function ConsultationPage() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="w-full h-12 bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white rounded-sm font-semibold text-sm"
+                  className="w-full h-12 bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white rounded-sm font-semibold text-sm"
                   data-testid="form-submit-btn"
                 >
                   <Send className="h-4 w-4 mr-2" />
@@ -441,10 +455,10 @@ export default function ConsultationPage() {
           <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
             {STEPS.map((step, i) => (
               <div key={i} className="relative bg-white border border-[hsl(214,32%,91%)] rounded-sm p-5 text-center" data-testid={`process-step-${i}`}>
-                <div className="w-10 h-10 bg-[hsl(214,100%,40%)] text-white rounded-sm flex items-center justify-center mx-auto mb-3">
+                <div className="w-10 h-10 bg-[hsl(211,70%,39%)] text-white rounded-sm flex items-center justify-center mx-auto mb-3">
                   <step.icon className="h-5 w-5" />
                 </div>
-                <span className="block text-[10px] font-bold text-[hsl(214,100%,40%)] uppercase tracking-wider mb-1.5">Step {step.num}</span>
+                <span className="block text-[10px] font-bold text-[hsl(211,70%,39%)] uppercase tracking-wider mb-1.5">Step {step.num}</span>
                 <p className="text-sm text-[hsl(222,47%,11%)] leading-snug">{step.label}</p>
                 {i < STEPS.length - 1 && (
                   <ArrowRight className="hidden sm:block absolute -right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(214,32%,91%)] z-10" />
@@ -469,7 +483,7 @@ export default function ConsultationPage() {
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
-                className="border border-[hsl(214,32%,91%)] rounded-sm px-5 data-[state=open]:border-[hsl(214,100%,40%)/0.3]"
+                className="border border-[hsl(214,32%,91%)] rounded-sm px-5 data-[state=open]:border-[hsl(211,70%,39%)/0.3]"
               >
                 <AccordionTrigger className="text-sm font-semibold text-[hsl(222,47%,11%)] text-left py-4 hover:no-underline" data-testid={`consultation-faq-${i}`}>
                   {item.q}
@@ -494,7 +508,7 @@ export default function ConsultationPage() {
           </p>
           <Button
             onClick={scrollToForm}
-            className="bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white h-12 px-10 text-sm font-semibold rounded-sm"
+            className="bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white h-12 px-10 text-sm font-semibold rounded-sm"
             data-testid="cta-request-btn"
           >
             Request Consultation Now <ArrowRight className="ml-2 h-4 w-4" />

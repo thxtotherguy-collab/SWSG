@@ -72,11 +72,11 @@ export default function ProductPage() {
       {/* Breadcrumb */}
       <div className="bg-[hsl(210,40%,98%)] border-b border-[hsl(214,32%,91%)]">
         <div className="max-w-[1400px] mx-auto px-4 py-3 flex items-center gap-2 text-sm text-[hsl(215,16%,47%)]">
-          <Link to="/" className="hover:text-[hsl(214,100%,40%)]">Home</Link>
+          <Link to="/" className="hover:text-[hsl(211,70%,39%)]">Home</Link>
           <ChevronRight className="h-3 w-3" />
-          <Link to="/shop" className="hover:text-[hsl(214,100%,40%)]">Shop</Link>
+          <Link to="/shop" className="hover:text-[hsl(211,70%,39%)]">Shop</Link>
           <ChevronRight className="h-3 w-3" />
-          <Link to={`/shop?category=${product.category_slug}`} className="hover:text-[hsl(214,100%,40%)]">{product.category}</Link>
+          <Link to={`/shop?category=${product.category_slug}`} className="hover:text-[hsl(211,70%,39%)]">{product.category}</Link>
           <ChevronRight className="h-3 w-3" />
           <span className="text-[hsl(222,47%,11%)] font-medium truncate max-w-[200px]">{product.name}</span>
         </div>
@@ -139,7 +139,7 @@ export default function ProductPage() {
               </div>
               <Button
                 onClick={() => addItem(product, qty)}
-                className="bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white h-11 px-8 rounded-sm font-semibold"
+                className="bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white h-11 px-8 rounded-sm font-semibold"
                 data-testid="add-to-cart-btn"
               >
                 <ShoppingCart className="h-4 w-4 mr-2" /> Add to Quote

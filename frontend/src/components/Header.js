@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, Menu, X, Droplets, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Search, User, Menu, ChevronDown } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { Button } from './ui/button';
@@ -13,6 +13,8 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
+const LOGO_SRC = '/images/brand/swsg-logo.png';
+
 export default function Header() {
   const { user, logout } = useAuth();
   const { totalItems } = useCart();
@@ -23,15 +25,17 @@ export default function Header() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`/store?search=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
   };
 
   const navLinks = [
     { label: 'Home', path: '/' },
-    { label: 'Shop', path: '/shop' },
-    { label: 'Pump Finder', path: '/pump-finder' },
+    { label: 'Pumps', path: '/pumps' },
+    { label: 'Irrigation', path: '/irrigation' },
+    { label: 'Agriculture', path: '/agriculture' },
+    { label: 'Store', path: '/store' },
     { label: 'Consultation', path: '/consultation' },
     { label: 'About', path: '/about' },
     { label: 'Contact', path: '/contact' },
@@ -53,10 +57,10 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-border" data-testid="main-header">
       {/* Top bar */}
-      <div className="bg-[hsl(214,100%,40%)] text-white text-xs py-1.5">
+      <div className="bg-[hsl(211,68%,16%)] text-white text-xs py-1.5">
         <div className="max-w-[1400px] mx-auto px-4 flex items-center justify-between">
-          <span>Supply &bull; Advice &bull; Quotes</span>
-          <span className="hidden sm:inline">Free quote requests &bull; International delivery</span>
+          <span>Pumps &bull; Irrigation &bull; Agriculture</span>
+          <span className="hidden sm:inline">+27 81 417 7689 &bull; info@swsg.co.za</span>
         </div>
       </div>
 
@@ -64,21 +68,18 @@ export default function Header() {
       <div className="max-w-[1400px] mx-auto px-4">
         <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 shrink-0" data-testid="logo-link">
-            <Droplets className="h-7 w-7 text-[hsl(214,100%,40%)]" />
-            <div className="leading-tight">
-              <span className="font-manrope font-bold text-lg tracking-tight text-[hsl(222,47%,11%)]">POPP</span>
-              <span className="hidden sm:block text-[10px] text-[hsl(215,16%,47%)] font-medium -mt-0.5">Pump & Tank Co</span>
-            </div>
+          <Link to="/" className="flex items-center gap-2 shrink-0" data-testid="logo-link" aria-label="SWSG Home">
+            <img src={LOGO_SRC} alt="Southern Water Solutions Group" className="h-11 w-auto object-contain" />
+            <span className="sr-only">SWSG — Southern Water Solutions Group</span>
           </Link>
 
           {/* Search */}
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4">
-            <div className="flex w-full border border-border rounded-sm overflow-hidden focus-within:ring-2 focus-within:ring-[hsl(214,100%,40%)] focus-within:border-[hsl(214,100%,40%)]">
+            <div className="flex w-full border border-border rounded-sm overflow-hidden focus-within:ring-2 focus-within:ring-[hsl(211,70%,39%)] focus-within:border-[hsl(211,70%,39%)]">
               <input
                 data-testid="search-input"
                 type="text"
-                placeholder="Search pumps, tanks, accessories..."
+                placeholder="Search pumps, parts, accessories..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1 px-3 py-2 text-sm outline-none bg-white"
@@ -86,7 +87,7 @@ export default function Header() {
               <button
                 type="submit"
                 data-testid="search-submit"
-                className="px-3 bg-[hsl(214,100%,40%)] text-white hover:bg-[hsl(214,100%,35%)] transition-colors"
+                className="px-3 bg-[hsl(211,70%,39%)] text-white hover:bg-[hsl(211,70%,32%)] transition-colors"
               >
                 <Search className="h-4 w-4" />
               </button>
@@ -94,39 +95,39 @@ export default function Header() {
           </form>
 
           {/* Desktop nav links */}
-          <nav className="hidden lg:flex items-center gap-1" data-testid="desktop-nav">
-            {navLinks.slice(0, 2).map(link => (
+          <nav className="hidden lg:flex items-center gap-0.5" data-testid="desktop-nav">
+            {navLinks.slice(0, 4).map(link => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="px-3 py-2 text-sm font-medium text-[hsl(222,47%,11%)] hover:text-[hsl(214,100%,40%)] transition-colors"
+                className="px-2.5 py-2 text-sm font-medium text-[hsl(211,68%,16%)] hover:text-[hsl(211,70%,39%)] transition-colors"
               >
                 {link.label}
               </Link>
             ))}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="px-3 py-2 text-sm font-medium text-[hsl(222,47%,11%)] hover:text-[hsl(214,100%,40%)] transition-colors inline-flex items-center gap-1" data-testid="categories-dropdown">
-                  Categories <ChevronDown className="h-3.5 w-3.5" />
+                <button className="px-2.5 py-2 text-sm font-medium text-[hsl(211,68%,16%)] hover:text-[hsl(211,70%,39%)] transition-colors inline-flex items-center gap-1" data-testid="categories-dropdown">
+                  Store <ChevronDown className="h-3.5 w-3.5" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-52">
+                <DropdownMenuItem asChild>
+                  <Link to="/store" className="cursor-pointer font-medium">All Products</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 {categories.map(cat => (
                   <DropdownMenuItem key={cat.slug} asChild>
-                    <Link to={`/shop?category=${cat.slug}`} className="cursor-pointer">{cat.label}</Link>
+                    <Link to={`/store?category=${cat.slug}`} className="cursor-pointer">{cat.label}</Link>
                   </DropdownMenuItem>
                 ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/shop" className="cursor-pointer font-medium">All Products</Link>
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            {navLinks.slice(2).map(link => (
+            {navLinks.slice(5).map(link => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="px-3 py-2 text-sm font-medium text-[hsl(222,47%,11%)] hover:text-[hsl(214,100%,40%)] transition-colors"
+                className="px-2.5 py-2 text-sm font-medium text-[hsl(211,68%,16%)] hover:text-[hsl(211,70%,39%)] transition-colors"
               >
                 {link.label}
               </Link>
@@ -160,9 +161,9 @@ export default function Header() {
             <Link to="/cart" className="relative" data-testid="cart-link">
               <Button variant="ghost" size="sm" className="gap-1.5">
                 <ShoppingCart className="h-4 w-4" />
-                <span className="hidden sm:inline text-sm">Quote</span>
+                <span className="hidden sm:inline text-sm">Cart</span>
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[hsl(214,100%,40%)] text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-badge">
+                  <span className="absolute -top-1 -right-1 bg-[hsl(211,70%,39%)] text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-badge">
                     {totalItems}
                   </span>
                 )}
@@ -179,7 +180,8 @@ export default function Header() {
               <SheetContent side="right" className="w-80">
                 <SheetHeader>
                   <SheetTitle className="flex items-center gap-2">
-                    <Droplets className="h-5 w-5 text-[hsl(214,100%,40%)]" /> POPP
+                    <img src={LOGO_SRC} alt="SWSG" className="h-8 w-auto object-contain" />
+                    <span className="sr-only">SWSG</span>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="mt-6 space-y-1">
@@ -194,7 +196,7 @@ export default function Header() {
                         className="flex-1 px-3 py-2 text-sm outline-none"
                         data-testid="mobile-search-input"
                       />
-                      <button type="submit" className="px-3 bg-[hsl(214,100%,40%)] text-white">
+                      <button type="submit" className="px-3 bg-[hsl(211,70%,39%)] text-white">
                         <Search className="h-4 w-4" />
                       </button>
                     </div>
@@ -210,11 +212,11 @@ export default function Header() {
                     </Link>
                   ))}
                   <div className="border-t border-border pt-3 mt-3">
-                    <p className="px-3 text-xs font-semibold text-[hsl(215,16%,47%)] uppercase tracking-wider mb-2">Categories</p>
+                    <p className="px-3 text-xs font-semibold text-[hsl(215,16%,47%)] uppercase tracking-wider mb-2">Pump Categories</p>
                     {categories.map(cat => (
                       <Link
                         key={cat.slug}
-                        to={`/shop?category=${cat.slug}`}
+                        to={`/store?category=${cat.slug}`}
                         onClick={() => setMobileOpen(false)}
                         className="block px-3 py-2 text-sm hover:bg-[hsl(210,40%,96%)] rounded-sm"
                       >
@@ -226,7 +228,7 @@ export default function Header() {
                     {user ? (
                       <button onClick={() => { logout(); setMobileOpen(false); }} className="block w-full text-left px-3 py-2.5 text-sm font-medium text-red-600" data-testid="mobile-logout-btn">Sign Out</button>
                     ) : (
-                      <Link to="/auth" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-[hsl(214,100%,40%)]" data-testid="mobile-login-link">Sign In / Register</Link>
+                      <Link to="/auth" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-[hsl(211,70%,39%)]" data-testid="mobile-login-link">Sign In / Register</Link>
                     )}
                   </div>
                 </div>

@@ -16,7 +16,7 @@ export function TrustElements() {
         ].map((item, i) => (
           <div key={i} className="p-5 flex gap-3.5">
             <div className="w-9 h-9 bg-[hsl(214,100%,96%)] rounded-sm flex items-center justify-center shrink-0">
-              <item.icon className="h-4.5 w-4.5 text-[hsl(214,100%,40%)]" />
+              <item.icon className="h-4.5 w-4.5 text-[hsl(211,70%,39%)]" />
             </div>
             <div>
               <p className="font-manrope font-semibold text-sm text-[hsl(222,47%,11%)]">{item.title}</p>
@@ -50,7 +50,7 @@ export function CategoryFAQ({ categorySlug }) {
           <AccordionItem
             key={i}
             value={`faq-${i}`}
-            className="bg-white border border-[hsl(214,32%,91%)] rounded-sm px-5 data-[state=open]:border-[hsl(214,100%,40%)/0.3]"
+            className="bg-white border border-[hsl(214,32%,91%)] rounded-sm px-5 data-[state=open]:border-[hsl(211,70%,39%)/0.3]"
           >
             <AccordionTrigger className="text-sm font-semibold text-[hsl(222,47%,11%)] text-left py-4 hover:no-underline" data-testid={`faq-trigger-${i}`}>
               {item.q}

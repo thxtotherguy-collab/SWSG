@@ -51,7 +51,7 @@ export default function PumpFinderPage() {
     <div className="min-h-screen bg-[hsl(210,40%,98%)]" data-testid="pump-finder-page">
       <div className="bg-white border-b border-[hsl(214,32%,91%)]">
         <div className="max-w-[1400px] mx-auto px-4 py-3 flex items-center gap-2 text-sm text-[hsl(215,16%,47%)]">
-          <Link to="/" className="hover:text-[hsl(214,100%,40%)]">Home</Link>
+          <Link to="/" className="hover:text-[hsl(211,70%,39%)]">Home</Link>
           <ChevronRight className="h-3 w-3" />
           <span className="text-[hsl(222,47%,11%)] font-medium">Pump Finder</span>
         </div>
@@ -59,7 +59,7 @@ export default function PumpFinderPage() {
 
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="text-center mb-10">
-          <Activity className="h-12 w-12 text-[hsl(214,100%,40%)] mx-auto mb-4" />
+          <Activity className="h-12 w-12 text-[hsl(211,70%,39%)] mx-auto mb-4" />
           <h1 className="font-manrope font-bold text-3xl sm:text-4xl text-[hsl(222,47%,11%)] mb-3">Pump Finder</h1>
           <p className="text-base text-[hsl(215,16%,47%)] max-w-lg mx-auto">
             Enter your flow rate and head requirements below. We'll match you with suitable pumps from our range.
@@ -78,7 +78,7 @@ export default function PumpFinderPage() {
                   value={flowRate}
                   onChange={(e) => setFlowRate(e.target.value)}
                   placeholder="e.g. 40"
-                  className="w-full h-11 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]"
+                  className="w-full h-11 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]"
                   data-testid="flow-rate-input"
                   required
                   min="1"
@@ -94,7 +94,7 @@ export default function PumpFinderPage() {
                   value={headRequired}
                   onChange={(e) => setHeadRequired(e.target.value)}
                   placeholder="e.g. 30"
-                  className="w-full h-11 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(214,100%,40%)] focus:border-[hsl(214,100%,40%)]"
+                  className="w-full h-11 px-3 border border-[hsl(214,32%,91%)] rounded-sm text-sm outline-none focus:ring-2 focus:ring-[hsl(211,70%,39%)] focus:border-[hsl(211,70%,39%)]"
                   data-testid="head-input"
                   required
                   min="1"
@@ -118,7 +118,7 @@ export default function PumpFinderPage() {
               </Select>
             </div>
 
-            <Button type="submit" className="w-full h-12 bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white rounded-sm font-semibold" data-testid="find-pump-btn">
+            <Button type="submit" className="w-full h-12 bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white rounded-sm font-semibold" data-testid="find-pump-btn">
               Find My Pump
             </Button>
           </form>
@@ -151,7 +151,7 @@ export default function PumpFinderPage() {
                     <div className="flex items-center gap-4">
                       <span className="font-manrope font-bold text-xl text-[hsl(222,47%,11%)]">{formatPrice(pump.price)}</span>
                       <Link to="/contact">
-                        <Button className="bg-[hsl(214,100%,40%)] hover:bg-[hsl(214,100%,35%)] text-white rounded-sm" data-testid={`quote-pump-${i}`}>
+                        <Button className="bg-[hsl(211,70%,39%)] hover:bg-[hsl(211,70%,32%)] text-white rounded-sm" data-testid={`quote-pump-${i}`}>
                           Get Quote <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       </Link>
@@ -165,7 +165,7 @@ export default function PumpFinderPage() {
 
         <Separator className="my-12" />
         <div className="text-center text-sm text-[hsl(215,16%,47%)]">
-          <p>Not sure about your requirements? <Link to="/contact" className="text-[hsl(214,100%,40%)] font-medium hover:underline">Contact us</Link> and we'll help you size the right pump.</p>
+          <p>Not sure about your requirements? <Link to="/contact" className="text-[hsl(211,70%,39%)] font-medium hover:underline">Contact us</Link> and we'll help you size the right pump.</p>
         </div>
       </div>
     </div>
