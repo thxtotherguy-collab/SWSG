@@ -45,7 +45,7 @@ export default function AuthPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-4">
-            <img src={LOGO_SRC} alt="SWSG — Southern Water Solutions Group" className="h-12 w-auto object-contain" />
+            <img src={LOGO_SRC} alt="SWSG — Southern Water Solutions Group" className="h-20 w-auto object-contain" />
           </Link>
           <p className="text-sm text-[hsl(215,16%,47%)]">Sign in or create an account to manage your quotes with SWSG</p>
         </div>

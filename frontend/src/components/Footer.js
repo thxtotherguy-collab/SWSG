@@ -24,7 +24,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img src={LOGO_SRC} alt="SWSG — Southern Water Solutions Group" className="h-12 w-auto object-contain bg-white rounded-sm p-1.5" />
+              <img src={LOGO_SRC} alt="SWSG — Southern Water Solutions Group" className="h-20 w-auto object-contain bg-white rounded-sm p-2" />
             </div>
             <p className="text-sm text-gray-300 leading-relaxed mb-4">
               <span className="font-semibold text-white">Southern Water Solutions Group</span> — practical pump, irrigation and agricultural water solutions across South Africa. Supply, advice and quotes.

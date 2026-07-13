@@ -1,11 +1,6 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Activity, Settings, Droplets, ShieldCheck, Truck, Zap, Sprout, Tractor } from 'lucide-react';
-import axios from 'axios';
 import { Button } from '../components/ui/button';
-import ProductCard from '../components/ProductCard';
-
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const HERO_IMG = 'https://images.unsplash.com/photo-1692369584496-3216a88f94c1?w=1600&q=80';
 
@@ -40,22 +35,6 @@ const DIVISIONS = [
 ];
 
 export default function HomePage() {
-  const [featured, setFeatured] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await axios.get(`${API}/products?featured=true&limit=8`);
-        setFeatured(res.data);
-      } catch (err) {
-        console.error('Failed to load featured products', err);
-      }
-      setLoading(false);
-    };
-    load();
-  }, []);
-
   return (
     <div data-testid="home-page">
       {/* Hero */}
@@ -144,39 +123,6 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-20 bg-white" data-testid="featured-section">
-        <div className="max-w-[1400px] mx-auto px-4">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <h2 className="font-manrope font-bold text-2xl sm:text-3xl text-[hsl(211,68%,16%)] mb-2">Featured Pumps</h2>
-              <p className="text-base text-[hsl(215,16%,47%)]">Popular products from our store.</p>
-            </div>
-            <Link to="/store" className="hidden sm:inline-flex items-center text-sm font-medium text-[hsl(211,70%,39%)] hover:underline">
-              View All <ArrowRight className="h-4 w-4 ml-1" />
-            </Link>
-          </div>
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[1,2,3,4].map(i => (
-                <div key={i} className="bg-[hsl(210,40%,96%)] animate-pulse rounded-sm h-80" />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {featured.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-          <div className="mt-8 text-center sm:hidden">
-            <Link to="/store">
-              <Button variant="outline" className="rounded-sm" data-testid="view-all-products-btn">View All Products</Button>
-            </Link>
           </div>
         </div>
       </section>

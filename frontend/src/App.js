@@ -105,7 +105,7 @@ function App() {
           <UnderConstructionNotice />
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1 pt-[calc(2rem+64px)]">
+            <main className="flex-1 pt-[calc(2rem+80px)]">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/pumps" element={<PumpsPage />} />

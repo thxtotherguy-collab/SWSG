@@ -19,7 +19,7 @@ export default function AboutPage() {
       <section className="bg-[hsl(210,40%,98%)] py-20">
         <div className="max-w-[1400px] mx-auto px-4">
           <div className="max-w-2xl">
-            <img src={LOGO_SRC} alt="SWSG — Southern Water Solutions Group" className="h-16 w-auto object-contain mb-6" />
+            <img src={LOGO_SRC} alt="SWSG — Southern Water Solutions Group" className="h-24 sm:h-28 w-auto object-contain mb-6" />
             <p className="text-[hsl(123,46%,34%)] font-semibold text-xs uppercase tracking-widest mb-3">About Us</p>
             <h1 className="font-manrope font-bold text-3xl sm:text-4xl text-[hsl(211,68%,16%)] mb-6">
               Southern Water Solutions Group
