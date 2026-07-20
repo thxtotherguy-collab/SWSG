@@ -40,7 +40,7 @@ function App() {
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1 pt-[calc(2rem+80px)]">
+            <main className="flex-1 pt-[calc(2rem+64px)] sm:pt-[calc(2rem+96px)]">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/pumps" element={<PumpsPage />} />
