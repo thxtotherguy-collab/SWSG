@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
-const LOGO_SRC = '/images/brand/swsg-logo.png';
+const LOGO_SRC = '/images/brand/swsg-logo-vector.webp';
 
 export default function Header() {
   const { user, logout } = useAuth();

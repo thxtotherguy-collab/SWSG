@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from './ui/button';
 
-const LOGO_SRC = '/images/brand/swsg-footer-logo.png';
+const LOGO_SRC = '/images/brand/swsg-logo-vector-inverted.webp';
 
 export default function Footer() {
   const [email, setEmail] = useState('');

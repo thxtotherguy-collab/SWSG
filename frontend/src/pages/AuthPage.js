@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { toast } from 'sonner';
 
-const LOGO_SRC = '/images/brand/swsg-logo.png';
+const LOGO_SRC = '/images/brand/swsg-logo-vector.webp';
 
 export default function AuthPage() {
   const { login, register } = useAuth();

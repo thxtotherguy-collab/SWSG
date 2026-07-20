@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, ShieldCheck, Users, Truck, ArrowRight, Droplets, Sprout, Tractor } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
-const LOGO_SRC = '/images/brand/swsg-logo.png';
+const LOGO_SRC = '/images/brand/swsg-logo-vector.webp';
 
 export default function AboutPage() {
   return (
