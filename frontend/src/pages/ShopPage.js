@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { SlidersHorizontal, X, Search, ChevronDown, ChevronUp, ArrowUpDown, Package, Zap } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
@@ -96,6 +96,8 @@ function CatalogProductCard({ product }) {
   const handleAddToCart = () => {
     const cartProduct = {
       id: product.has_dual_voltage ? `${product.id}-${selectedVoltage}` : product.id,
+      slug: product.id,
+      sku: product.sku,
       name: product.has_dual_voltage ? `${product.name} (${selectedVoltage})` : product.name,
       brand: product.brand,
       price: displayPrice,
@@ -132,7 +134,7 @@ function CatalogProductCard({ product }) {
       )}
 
       {/* Image */}
-      <div className="relative aspect-square bg-[hsl(210,40%,96%)] overflow-hidden">
+      <Link to={`/product/${product.id}`} className="relative aspect-square bg-[hsl(210,40%,96%)] overflow-hidden">
         <img
           src={imgSrc}
           alt={product.name}
@@ -140,7 +142,7 @@ function CatalogProductCard({ product }) {
           loading="lazy"
           onError={handleImageError}
         />
-      </div>
+      </Link>
 
       <div className="flex flex-col flex-1 p-4">
         {/* Brand & SKU */}
@@ -150,9 +152,9 @@ function CatalogProductCard({ product }) {
         </div>
         
         {/* Product Name */}
-        <h3 className="font-manrope font-semibold text-sm text-[hsl(222,47%,11%)] line-clamp-2 mb-1.5">
+        <Link to={`/product/${product.id}`} className="font-manrope font-semibold text-sm text-[hsl(222,47%,11%)] hover:text-[hsl(211,70%,39%)] transition-colors line-clamp-2 mb-1.5">
           {product.name}
-        </h3>
+        </Link>
         
         {/* Description */}
         <p className="text-xs text-[hsl(215,16%,47%)] line-clamp-2 mb-2 flex-1">{product.description}</p>

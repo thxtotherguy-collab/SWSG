@@ -102,3 +102,5 @@ android-sdk/ -e
 credentials.json
 *.key
 .credentials
+!frontend/.env.example
+!frontend/.env.production

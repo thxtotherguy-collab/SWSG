@@ -1,60 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ShoppingCart, ChevronRight, ZoomIn, X } from 'lucide-react';
-import axios from 'axios';
 import { useCart } from '../contexts/CartContext';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Separator } from '../components/ui/separator';
 import ProductCard from '../components/ProductCard';
-
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+import { findCatalogProduct, getRelatedCatalogProducts } from '../data/catalogProducts';
 
 export default function ProductPage() {
   const { id } = useParams();
   const { addItem } = useCart();
-  const [product, setProduct] = useState(null);
-  const [related, setRelated] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(false);
   const [qty, setQty] = useState(1);
+  const product = useMemo(() => findCatalogProduct(id), [id]);
+  const related = useMemo(() => getRelatedCatalogProducts(product), [product]);
 
   useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      try {
-        const [prodRes, relRes] = await Promise.all([
-          axios.get(`${API}/products/${id}`),
-          axios.get(`${API}/products/${id}/related`)
-        ]);
-        setProduct(prodRes.data);
-        setRelated(relRes.data);
-      } catch (err) {
-        console.error('Failed to load product', err);
-      }
-      setLoading(false);
-    };
-    load();
+    setQty(1);
+    setLightbox(false);
     window.scrollTo(0, 0);
   }, [id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="aspect-square bg-[hsl(210,40%,96%)] animate-pulse rounded-sm" />
-            <div className="space-y-4">
-              <div className="h-6 bg-[hsl(210,40%,96%)] animate-pulse rounded w-1/3" />
-              <div className="h-10 bg-[hsl(210,40%,96%)] animate-pulse rounded w-2/3" />
-              <div className="h-4 bg-[hsl(210,40%,96%)] animate-pulse rounded w-full" />
-              <div className="h-4 bg-[hsl(210,40%,96%)] animate-pulse rounded w-4/5" />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (!product) {
     return (

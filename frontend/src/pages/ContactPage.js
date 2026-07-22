@@ -3,19 +3,47 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ChevronRight, Send } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { toast } from 'sonner';
+import {
+  buildContactMessage,
+  STATIC_FORM_FALLBACK,
+  STATIC_FORM_SUBJECTS,
+  submitStaticForm,
+} from '../config/staticForms';
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => {
+
+    try {
+      const result = await submitStaticForm({
+        formType: 'Contact Message',
+        subject: STATIC_FORM_SUBJECTS.contact,
+        fields: {
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          customer_subject: form.subject,
+          original_message: form.message,
+          message: buildContactMessage(form),
+        },
+      });
+
+      if (!result.success) {
+        toast.error('Message could not be sent.', {
+          description: `${result.message} ${STATIC_FORM_FALLBACK}`,
+        });
+        return;
+      }
+
       toast.success('Message sent! Our team will get back to you soon.');
       setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+    } finally {
       setSending(false);
-    }, 1000);
+    }
   };
 
   return (

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Search, User, Menu, ChevronDown } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { ShoppingCart, Search, Menu, ChevronDown } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
@@ -16,7 +15,6 @@ import {
 const LOGO_SRC = '/images/brand/swsg-logo-vector.webp';
 
 export default function Header() {
-  const { user, logout } = useAuth();
   const { totalItems } = useCart();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
@@ -136,28 +134,6 @@ export default function Header() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2">
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="hidden sm:inline-flex gap-1.5" data-testid="user-menu-btn">
-                    <User className="h-4 w-4" />
-                    <span className="text-sm">{user.name?.split(' ')[0]}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem className="text-xs text-muted-foreground">{user.email}</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={logout} data-testid="logout-btn" className="cursor-pointer">Sign Out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link to="/auth" data-testid="login-link">
-                <Button variant="ghost" size="sm" className="hidden sm:inline-flex gap-1.5">
-                  <User className="h-4 w-4" /> Sign In
-                </Button>
-              </Link>
-            )}
-
             <Link to="/cart" className="relative" data-testid="cart-link">
               <Button variant="ghost" size="sm" className="gap-1.5">
                 <ShoppingCart className="h-4 w-4" />
@@ -223,13 +199,6 @@ export default function Header() {
                         {cat.label}
                       </Link>
                     ))}
-                  </div>
-                  <div className="border-t border-border pt-3 mt-3">
-                    {user ? (
-                      <button onClick={() => { logout(); setMobileOpen(false); }} className="block w-full text-left px-3 py-2.5 text-sm font-medium text-red-600" data-testid="mobile-logout-btn">Sign Out</button>
-                    ) : (
-                      <Link to="/auth" onClick={() => setMobileOpen(false)} className="block px-3 py-2.5 text-sm font-medium text-[hsl(211,70%,39%)]" data-testid="mobile-login-link">Sign In / Register</Link>
-                    )}
                   </div>
                 </div>
               </SheetContent>

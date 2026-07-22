@@ -11,9 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Separator } from '../components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../components/ui/accordion';
 import { toast } from 'sonner';
-import axios from 'axios';
-
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+import {
+  buildConsultationMessage,
+  STATIC_FORM_FALLBACK,
+  STATIC_FORM_SUBJECTS,
+  submitStaticForm,
+} from '../config/staticForms';
 
 const AUDIENCE = [
   { icon: Wrench, label: 'Plumbing Contractors' },
@@ -107,14 +110,29 @@ export default function ConsultationPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await axios.post(`${API}/consultations`, form);
+      const result = await submitStaticForm({
+        formType: 'Consultation Request',
+        subject: STATIC_FORM_SUBJECTS.consultation,
+        fields: {
+          ...form,
+          name: form.full_name,
+          message: buildConsultationMessage(form),
+        },
+      });
+
+      if (!result.success) {
+        toast.error('Submission failed.', {
+          description: `${result.message} ${STATIC_FORM_FALLBACK}`,
+        });
+        return;
+      }
+
       toast.success('Consultation request submitted. Our team will respond within 24-48 hours.');
       setForm(EMPTY_FORM);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch {
-      toast.error('Submission failed. Please try again or contact us directly.');
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
 
   return (

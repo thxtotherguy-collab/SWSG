@@ -2,23 +2,24 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Trash2, Minus, Plus, ChevronRight, Send } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
-import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/button';
 import { Separator } from '../components/ui/separator';
 import { toast } from 'sonner';
-import axios from 'axios';
-
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+import {
+  buildQuoteMessage,
+  STATIC_FORM_FALLBACK,
+  STATIC_FORM_SUBJECTS,
+  submitStaticForm,
+} from '../config/staticForms';
 
 export default function CartPage() {
   const { items, removeItem, updateQty, clearCart, totalPrice } = useCart();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
+    name: '',
+    email: '',
+    phone: '',
     company: '',
     message: '',
   });
@@ -30,18 +31,35 @@ export default function CartPage() {
     if (items.length === 0) { toast.error('Your quote is empty'); return; }
     setSubmitting(true);
     try {
-      const payload = {
-        ...form,
-        items: items.map(i => ({ id: i.id, name: i.name, brand: i.brand, price: i.price, qty: i.qty })),
-      };
-      await axios.post(`${API}/quotes`, payload);
+      const productSummary = buildQuoteMessage({ items, totalPrice, notes: form.message });
+      const result = await submitStaticForm({
+        formType: 'Quote Request',
+        subject: STATIC_FORM_SUBJECTS.quote,
+        fields: {
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          company: form.company,
+          notes: form.message,
+          product_summary: productSummary,
+          estimated_total: formatPrice(totalPrice),
+          message: productSummary,
+        },
+      });
+
+      if (!result.success) {
+        toast.error('Failed to submit quote.', {
+          description: `${result.message} ${STATIC_FORM_FALLBACK}`,
+        });
+        return;
+      }
+
       toast.success('Quote request submitted! We will contact you shortly.');
       clearCart();
       navigate('/');
-    } catch (err) {
-      toast.error('Failed to submit quote. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
 
   return (

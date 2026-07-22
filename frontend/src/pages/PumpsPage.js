@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, ArrowRight, Activity, Droplets, Zap, Container, Settings, ShieldCheck } from 'lucide-react';
-import axios from 'axios';
 import { Button } from '../components/ui/button';
 import ProductCard from '../components/ProductCard';
-
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+import { catalogProducts } from '../data/catalogProducts';
 
 const HERO_IMG = 'https://images.unsplash.com/photo-1513828583688-c52646db42da?w=1600&q=80';
 
@@ -19,21 +16,7 @@ const categoryTiles = [
 ];
 
 export default function PumpsPage() {
-  const [featured, setFeatured] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await axios.get(`${API}/products?featured=true&limit=8`);
-        setFeatured(res.data);
-      } catch (err) {
-        console.error('Failed to load featured pumps', err);
-      }
-      setLoading(false);
-    };
-    load();
-  }, []);
+  const featured = catalogProducts.slice(0, 8);
 
   return (
     <div className="min-h-screen bg-white" data-testid="pumps-page">
@@ -116,19 +99,11 @@ export default function PumpsPage() {
               View All <ArrowRight className="h-4 w-4 ml-1" />
             </Link>
           </div>
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[1,2,3,4].map(i => (
-                <div key={i} className="bg-[hsl(210,40%,96%)] animate-pulse rounded-sm h-80" />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {featured.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featured.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         </div>
       </section>
 

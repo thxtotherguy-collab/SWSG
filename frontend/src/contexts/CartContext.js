@@ -21,7 +21,16 @@ export function CartProvider({ children }) {
         return prev.map(i => i.id === product.id ? { ...i, qty: i.qty + qty } : i);
       }
       toast.success(`${product.name} added to quote`);
-      return [...prev, { id: product.id, name: product.name, brand: product.brand, price: product.price, image: product.images?.[0], qty }];
+      return [...prev, {
+        id: product.id,
+        slug: product.slug,
+        sku: product.sku,
+        name: product.name,
+        brand: product.brand,
+        price: product.price,
+        image: product.images?.[0],
+        qty,
+      }];
     });
   };
 
